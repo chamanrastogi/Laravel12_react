@@ -4,12 +4,35 @@ import type { Config } from 'ziggy-js';
 export interface Auth {
     user: User;
 }
-
+export interface Notification {
+    status: 'success' | 'error';
+    message: string;
+}
 export interface BreadcrumbItem {
     title: string;
     href: string;
 }
+export interface Student {    
+    name: string;
+    email: string;
+    age: string;
+    [key: string]: string;
+}
 
+export interface StudentTable {
+    id: number;
+    name: string;
+    email: string;
+    age: string;
+}
+export interface SharedData {
+    name: string;
+    sitename: string;
+    quote: { message: string; author: string };
+    flash: Notification;
+    auth: Auth;
+    [key: string]: unknown;
+}
 export interface NavGroup {
     title: string;
     items: NavItem[];
