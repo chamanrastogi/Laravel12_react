@@ -12,10 +12,16 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $st= Student::all();
-        return Inertia::render('backend/student/index',['students'=>$st]);
+        $students = Student::select('id', 'name', 'email', 'age', 'created_at')
+        //->orderBy('id', 'desc')
+        ->paginate(10) // Laravel paginates the results
+        ->withQueryString(); // Keeps search/filter params in URL
+
+    return Inertia::render('backend/student/index', [
+        'students' => $students
+    ]);
     }
 
     /**
@@ -37,10 +43,10 @@ class StudentController extends Controller
             'email' => 'required|email|unique:students,email',
             'age'   => 'required|integer|min:1',
         ]);
-    
+
         // Create new student
         $student = Student::create($validatedData);
-    
+
         // Return a JSON response (for API) or redirect (for web)       
         return redirect()->route('student.create')->with('Student created successfully!');
     }
@@ -57,8 +63,8 @@ class StudentController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Student $student)
-    {       
-        return Inertia::render('backend/student/edit',['student'=>$student]);
+    {
+        return Inertia::render('backend/student/edit', ['student' => $student]);
     }
 
     /**
@@ -68,11 +74,11 @@ class StudentController extends Controller
     {
         $validatedData = $request->validate([
             'name'  => 'required|string|max:255',
-            'email' => 'required|email|unique:students,email,'.$student->id,
+            'email' => 'required|email|unique:students,email,' . $student->id,
             'age'   => 'required|integer|min:1',
         ]);
-        
-       
+
+
         // Create new student
         $student->fill($validatedData);
         $student->update();
@@ -80,10 +86,9 @@ class StudentController extends Controller
             'status' => 'success', // Can be 'error' or 'success'
             'message' => 'Student successfully updated!',
         ];
-    
+
         // Return a JSON response (for API) or redirect (for web)       
         return redirect()->route('student.edit', $student->id)->with('notification', $notification);
-
     }
 
     /**
