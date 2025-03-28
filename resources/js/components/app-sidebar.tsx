@@ -14,8 +14,13 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
-        title: 'Student',
+        title: 'Serve Student',
         href: '/student',
+        icon: Option,
+    },
+    {
+        title: 'Data Student',
+        href: '/students',
         icon: Option,
     },
 ];

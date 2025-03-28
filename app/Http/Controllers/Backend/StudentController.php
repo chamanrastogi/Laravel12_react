@@ -15,15 +15,22 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $students = Student::select('id', 'name', 'email', 'age', 'created_at')
-        //->orderBy('id', 'desc')
-        ->paginate(10) // Laravel paginates the results
-        ->withQueryString(); // Keeps search/filter params in URL
+            //->orderBy('id', 'desc')
+            ->paginate(10) // Laravel paginates the results
+            ->withQueryString(); // Keeps search/filter params in URL
 
-    return Inertia::render('backend/student/index', [
-        'students' => $students
-    ]);
+        return Inertia::render('backend/student/index', [
+            'students' => $students
+        ]);
     }
-
+    public function students()
+    {
+        $students = Student::all(); // Keeps search/filter params in URL
+        
+        return Inertia::render('backend/student/students', [
+            'students' => $students
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      */
