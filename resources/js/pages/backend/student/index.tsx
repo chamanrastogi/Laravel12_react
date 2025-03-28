@@ -10,7 +10,14 @@ export default function Student() {
   const { students } = usePage<{ students: { data: StudentTable[], current_page: number, last_page: number, total: number, per_page: number } }>().props;
 
   const handlePageChange = (newPage: number) => {
-    router.get(route("student.index"), { page: newPage }, { preserveState: true });
+    router.get(route("student.index"), 
+    { page: newPage }, 
+    { 
+      preserveState: true, 
+      preserveScroll: true, 
+      only: ["students"] // Only fetch students to prevent full reload
+    }
+  );
   };
 
   return (    
@@ -21,7 +28,7 @@ export default function Student() {
           <Link href={route("student.create")} className={buttonVariants({ variant: "outline" })}>
             Create
           </Link>
-          <p>Total: {students.total}</p>
+         
         </div>
         <DataTable 
           columns={columns} 

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
     ColumnDef,
     flexRender,
@@ -12,8 +12,8 @@ import {
     getSortedRowModel,
     SortingState,
     useReactTable,
-} from '@tanstack/react-table';
-import * as React from 'react';
+} from "@tanstack/react-table";
+import * as React from "react";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -25,8 +25,7 @@ interface DataTableProps<TData, TValue> {
 
 export function DataTable<TData, TValue>({ columns, data, totalPages, currentPage, onPageChange }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
-    const [globalFilter, setGlobalFilter] = React.useState('');
-    const [pagination, setPagination] = React.useState({ pageIndex: 0, pageSize: 10 });
+    const [globalFilter, setGlobalFilter] = React.useState("");
     const table = useReactTable({
         data,
         columns,
@@ -35,29 +34,12 @@ export function DataTable<TData, TValue>({ columns, data, totalPages, currentPag
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         onSortingChange: setSorting,
-        onPaginationChange: setPagination,
-        state: { sorting, pagination, globalFilter },
+        state: { sorting, globalFilter },
     });
-    const maxPagesToShow = 6;
-    const startPage = Math.max(0, currentPage - Math.floor(maxPagesToShow / 2));
-    const endPage = Math.min(totalPages, startPage + maxPagesToShow);
+
     return (
         <div className="rounded-md border bg-white p-4 shadow">
             <div className="mb-4 flex items-center justify-between">
-                <Input placeholder="Search..." value={globalFilter} onChange={(e) => setGlobalFilter(e.target.value)} className="w-64" />
-            </div>
-            <div className="mb-4 flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                    <span className="text-sm font-semibold">Show</span>
-                    <select value={pagination.pageSize} onChange={(e) => table.setPageSize(Number(e.target.value))} className="rounded border p-1">
-                        {[10, 25, 50, 100].map((size) => (
-                            <option key={size} value={size}>
-                                {size}
-                            </option>
-                        ))}
-                    </select>
-                    <span className="text-sm font-semibold">entries</span>
-                </div>
                 <Input placeholder="Search..." value={globalFilter} onChange={(e) => setGlobalFilter(e.target.value)} className="w-64" />
             </div>
             <div className="rounded-md border">
@@ -68,8 +50,8 @@ export function DataTable<TData, TValue>({ columns, data, totalPages, currentPag
                                 {headerGroup.headers.map((header) => (
                                     <TableHead key={header.id} onClick={header.column.getToggleSortingHandler()} className="cursor-pointer">
                                         {flexRender(header.column.columnDef.header, header.getContext())}
-                                        {header.column.getIsSorted() === 'asc' && ' ▲'}
-                                        {header.column.getIsSorted() === 'desc' && ' ▼'}
+                                        {header.column.getIsSorted() === "asc" && " ▲"}
+                                        {header.column.getIsSorted() === "desc" && " ▼"}
                                     </TableHead>
                                 ))}
                             </TableRow>
@@ -107,16 +89,6 @@ export function DataTable<TData, TValue>({ columns, data, totalPages, currentPag
                     <Button variant="outline" size="sm" onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1}>
                         ❮
                     </Button>
-                    {Array.from({ length: endPage - startPage }, (_, i) => startPage + i).map((page) => (
-                        <Button
-                            key={page}
-                            variant={currentPage === page + 1 ? 'default' : 'outline'}
-                            size="sm"
-                            onClick={() => onPageChange(page + 1)}
-                        >
-                            {page + 1}
-                        </Button>
-                    ))}
                     <Button variant="outline" size="sm" onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages}>
                         ❯
                     </Button>

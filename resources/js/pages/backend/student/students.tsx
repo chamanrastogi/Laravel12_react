@@ -15,7 +15,7 @@ const Students = () => {
         <Link href={route("student.create")} className={buttonVariants({ variant: "outline" })}>
           Create
         </Link>
-        <p>Total: {students.length}</p>
+       
       </div>
       <DataTable columns={columns} data={students} />
     </div>

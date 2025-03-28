@@ -1,4 +1,6 @@
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -12,6 +14,21 @@ import { Link } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
 export const columns: ColumnDef<StudentTable>[] = [
+    {
+        id: 'select',
+        header: ({ table }) => (
+            <Checkbox
+                checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
+                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} aria-label="Select row" />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
     { accessorKey: 'id', header: 'ID' },
     { accessorKey: 'name', header: 'Name' },
     { accessorKey: 'email', header: 'Email' },
@@ -20,8 +37,10 @@ export const columns: ColumnDef<StudentTable>[] = [
     {
         header: 'Actions',
         cell: ({ row }) => {
-            const payment = row.original;
+            const student = row.original;
+            // Ensure this import is at the top of the file
 
+        
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -32,11 +51,19 @@ export const columns: ColumnDef<StudentTable>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                       
                         <DropdownMenuItem>
-                            <Link href={route('student.edit', payment.id)} className="fa fa-pencil transition"> Edit</Link> 
+        
+                            <Link href={route('student.edit', student.id)} className="fa fa-pencil transition  focus:bg-accent focus:text-accent-foreground data-[variant=destructive]:text-destructive-foreground data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/40 data-[variant=destructive]:focus:text-destructive-foreground data-[variant=destructive]:*:[svg]:!text-destructive-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
+                               
+                                Edit
+                            </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
-                            <Link href={route('student.delete', payment.id)} className="fa fa-trash transition"> Delete</Link>
+                            <Link href={route('student.delete', student.id)} className="fa fa-trash transition">
+                                {' '}
+                                Delete
+                            </Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                     </DropdownMenuContent>

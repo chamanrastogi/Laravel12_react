@@ -14,13 +14,17 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $students = Student::select('id', 'name', 'email', 'age', 'created_at')
-            //->orderBy('id', 'desc')
-            ->paginate(10) // Laravel paginates the results
-            ->withQueryString(); // Keeps search/filter params in URL
+        // Fetch paginated data
+        $students = Student::query()
+        ->when($request->search, fn ($query, $search) => 
+            $query->where('name', 'like', "%{$search}%")
+        )
+        ->orderBy('id', 'desc')
+        ->paginate($request->per_page ?? 10) // Default to 10 per page
+        ->withQueryString(); // Keeps ?page=X in URL
 
         return Inertia::render('backend/student/index', [
-            'students' => $students
+            'students' => $students, // Ensure 'students' key is correct
         ]);
     }
     public function students()
