@@ -23,6 +23,16 @@ const mainNavItems: NavItem[] = [
         href: '/students',
         icon: Option,
     },
+    {
+        title: 'Sellers',
+        href: '/sellers',
+        icon: Option,
+    },
+    {
+        title: 'Employee',
+        href: '/employees',
+        icon: Option,
+    },
 ];
 
 const footerNavItems: NavItem[] = [

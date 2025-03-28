@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Backend\EmployeeController;
+use App\Http\Controllers\Backend\SellerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\StudentController;
 use Inertia\Inertia;
@@ -19,6 +21,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('student/edit/{student}', [StudentController::class, 'edit'])->name('student.edit');
     Route::put('student/{student}', [StudentController::class, 'update'])->name('student.update');
     Route::get('student/delete/{student}', [StudentController::class, 'destroy'])->name('student.delete');
+    Route::resource('sellers', SellerController::class);
+    Route::resource('employees', EmployeeController::class);
 });
 
 require __DIR__.'/settings.php';

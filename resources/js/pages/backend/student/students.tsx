@@ -1,5 +1,5 @@
 import { buttonVariants } from "@/components/ui/button";
-import AppLayout from "@/layouts/app-layout";
+import AppLayout from "@/layouts/app-layout"
 import { Head, Link, usePage } from "@inertiajs/react";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
@@ -15,7 +15,7 @@ const Students = () => {
         <Link href={route("student.create")} className={buttonVariants({ variant: "outline" })}>
           Create
         </Link>
-       
+        <p>Total: {students.length}</p>
       </div>
       <DataTable columns={columns} data={students} />
     </div>
@@ -24,3 +24,4 @@ const Students = () => {
 };
 
 export default Students;
+      

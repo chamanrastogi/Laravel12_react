@@ -15,22 +15,33 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         // Fetch paginated data
-        $students = Student::query()
-        ->when($request->search, fn ($query, $search) => 
-            $query->where('name', 'like', "%{$search}%")
-        )
-        ->orderBy('id', 'desc')
-        ->paginate($request->per_page ?? 10) // Default to 10 per page
-        ->withQueryString(); // Keeps ?page=X in URL
+        $query = Student::query();
+
+        // Apply search
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // Apply sorting
+        if ($request->has('sort_by') && $request->has('sort_direction')) {
+            $query->orderBy($request->sort_by, $request->sort_direction);
+        } else {
+            $query->orderBy('id', 'desc'); // Default sorting
+        }
+
+        // Paginate results
+        $students = $query->paginate(10)->appends($request->query());
+
 
         return Inertia::render('backend/student/index', [
-            'students' => $students, // Ensure 'students' key is correct
+            'students' => $students,
+            'filters' => ['search' => $request->search]
         ]);
     }
     public function students()
     {
         $students = Student::all(); // Keeps search/filter params in URL
-        
+
         return Inertia::render('backend/student/students', [
             'students' => $students
         ]);

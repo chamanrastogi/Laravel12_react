@@ -25,6 +25,12 @@ export interface StudentTable {
     email: string;
     age: string;
 }
+export interface SellerTable {
+    id: number;
+    seller: string;
+    seller_city: string;
+    seller_state: string;
+}
 export interface SharedData {
     name: string;
     sitename: string;

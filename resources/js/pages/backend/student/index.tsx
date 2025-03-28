@@ -36,6 +36,7 @@ export default function Student() {
           totalPages={students.last_page} 
           currentPage={students.current_page} 
           onPageChange={handlePageChange} 
+          
         />
       </div>
     </AppLayout>
