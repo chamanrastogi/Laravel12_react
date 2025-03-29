@@ -12,7 +12,7 @@ export interface BreadcrumbItem {
     title: string;
     href: string;
 }
-export interface Student {    
+export interface Student {
     name: string;
     email: string;
     age: string;
@@ -24,6 +24,12 @@ export interface StudentTable {
     name: string;
     email: string;
     age: string;
+}
+export interface Employee {
+    id: number;
+    name: string;
+    position: string;
+    salary: string;
 }
 export interface SellerTable {
     id: number;

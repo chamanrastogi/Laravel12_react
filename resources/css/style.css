@@ -1,0 +1,29 @@
+#logo span.version {
+    padding-left: 3px;
+    color: #666;
+    font-size: 12px;
+}
+
+#contentTabs {
+    font-size: 14px;
+}
+
+.icon-btn {
+    background-color: #fff;
+    border: 2px solid #f7931e;
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+.nav-item a{
+  color: var(--white);
+
+}
+.nav-item .active{
+    background-color: #f7931e;
+    color: var(--white);
+}
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; /* remove the gap so it doesn't close */
+}

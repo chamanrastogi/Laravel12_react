@@ -4,13 +4,16 @@ import { usePage } from '@inertiajs/react';
 import 'font-awesome/css/font-awesome.min.css';
 import { useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import 'primereact/resources/themes/mira/theme.css'; // Theme
+import 'primereact/resources/primereact.min.css'; // Core CSS
+import 'primeicons/primeicons.css'; // Icons
 import '../../css/app.css';
 interface AppLayoutProps {
     children: React.ReactNode;
     breadcrumbs?: BreadcrumbItem[];
 }
 
-const AppLayout: React.FC<AppLayoutProps> = ({ children, breadcrumbs, ...props }) => {
+const AppLayout: React.FC<AppLayoutProps> = ({ children, ...props }) => {
     const { flash } = usePage<SharedData>().props;
     // Trigger flash message only on change
     useEffect(() => {
@@ -19,7 +22,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, breadcrumbs, ...props }
         }
     }, [flash]);
     return (
-        <AppLayoutTemplate breadcrumbs={breadcrumbs} {...props}>
+        <AppLayoutTemplate  {...props}>
             {children}
             <ToastContainer />
         </AppLayoutTemplate>

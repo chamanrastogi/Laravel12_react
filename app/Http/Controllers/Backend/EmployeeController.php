@@ -15,13 +15,13 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
-       
+
         $query = Employee::query();
 
         // Search filter
         if ($request->has('search')) {
-            $query->where('name', 'like', "%{$request->search}%")
-                  ->orWhere('position', 'like', "%{$request->search}%");
+            $query->where('name', 'like', "%{$request->search}%");
+            //    ->orWhere('position', 'like', "%{$request->search}%");
         }
 
         // Sorting

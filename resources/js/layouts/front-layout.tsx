@@ -1,0 +1,27 @@
+import Footer from "@/components/front/footer";
+import Nav from "@/components/front/nav";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import React, { ReactNode } from "react";
+import "font-awesome/css/font-awesome.min.css";
+import '../../css/style.css';
+interface Props {
+    children: ReactNode;
+}
+
+const AppFrontLayout: React.FC<Props> = ({ children }) => {
+    return (
+        <div className="min-h-screen flex flex-col">
+            {/* Header */}
+           <Nav/>
+
+            {/* Main Content */}
+            <div>{children}</div>
+
+            {/* Footer */}
+            <Footer/>
+        </div>
+    );
+};
+
+export default AppFrontLayout;
