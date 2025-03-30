@@ -37,7 +37,30 @@ class EmployeeController extends Controller
             'filters' => $request->only(['search', 'sortField', 'sortOrder'])
         ]);
     }
+    public function table(Request $request)
+    {
 
+        $query = Employee::query();
+
+        // Search filter
+        if ($request->has('search')) {
+            $query->where('name', 'like', "%{$request->search}%");
+            //    ->orWhere('position', 'like', "%{$request->search}%");
+        }
+
+        // Sorting
+        if ($request->has('sortField') && $request->has('sortOrder')) {
+            $query->orderBy($request->sortField, $request->sortOrder);
+        }
+
+        // Paginate results
+        $employees = $query->paginate(10)->appends($request->query());
+
+        return Inertia::render('table', [
+            'employees' => $employees,
+            'filters' => $request->only(['search', 'sortField', 'sortOrder'])
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      */

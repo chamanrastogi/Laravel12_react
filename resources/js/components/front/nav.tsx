@@ -1,132 +1,63 @@
-export default function Nav() {
+import { Navbar, Nav, NavDropdown, Container, Button, Image } from "react-bootstrap";
+import { Link } from "@inertiajs/react";
+
+export default function NavBar() {
     return (
-        <div >
-            <nav className="navbar navbar-custom d-flex flex-column">
-                <div className="d-flex justify-content-between w-100 p-2">
-                    <span className="d-flex flex" id="logo">
-                        <span className="version mt-4">10.0 beta</span>
+        <div>
+            {/* Top Navbar */}
+            <Navbar bg="light" variant="light" className="shadow-sm px-3 py-2">
+                <Container className="d-flex justify-content-between">
+                    {/* Logo */}
+                    <span className="flex d-flex" id="logo">
+                        <Link href="/table">
+                            <Image src="/images/logo.png" alt="mySamm Logo"  />
+                            </Link>
+
+                    <span className="version mt-4">10.0 beta</span>
                     </span>
-
-                    <div className="flex">
-                        <span>
-                            Welcome, <strong>Demo-Account</strong>
-                        </span>
-                        <button className="icon-btn">
-                            <i className="fa fa-star"></i>
-                        </button>
-                        <button className="icon-btn">
-                            <i className="fa fa-user"></i>
-                        </button>
-                        <button className="icon-btn">
-                            <i className="fa fa-question"></i>
-                        </button>
-                        <button className="icon-btn">
-                            <i className="fa fa-cog"></i>
-                        </button>
+                    {/* User Actions */}
+                    <div className="d-flex align-items-center gap-2">
+                        <span>Welcome, <strong>Demo-Account</strong></span>
+                        <Button variant="outline-secondary" size="sm"><i className="fa fa-star"></i></Button>
+                        <Button variant="outline-secondary" size="sm"><i className="fa fa-user"></i></Button>
+                        <Button variant="outline-secondary" size="sm"><i className="fa fa-question"></i></Button>
+                        <Button variant="outline-secondary" size="sm"><i className="fa fa-cog"></i></Button>
                     </div>
-                </div>
-            </nav>
+                </Container>
+            </Navbar>
 
-            <nav className="navbar navbar-expand-lg navbar-dark bg-primary p-0 text-white">
-                <div className="container-fluid">
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNavDropdown"
-                        aria-controls="navbarNavDropdown"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="navbar-collapse collapse" id="navbarNavDropdown">
-                        <ul className="navbar-nav">
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="priceTracker" role="button" data-bs-toggle="dropdown">
-                                    Price & Seller Tracker
-                                </a>
-                                <ul className="dropdown-menu">
-                                    <li>
-                                        <a className="dropdown-item" href="#">
-                                            Account Dashboard
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">
-                                            Matched Accounts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">
-                                            Unmatched Sellers
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="productTracker" role="button" data-bs-toggle="dropdown">
-                                    Product Tracker
-                                </a>
-                                <ul className="dropdown-menu">
-                                    <li>
-                                        <a className="dropdown-item" href="#">
-                                            Market Share Dashboard
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">
-                                            Website Specifics
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                    Top Seller Tracker
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                    Top Content Tracker
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                    Content Creation
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                    Prospect Tracker
-                                </a>
-                            </li>
-                            <li className="nav-item active">
-                                <a className="nav-link active" href="#">
-                                    Content Management
-                                </a>
-                            </li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="researchTracker" role="button" data-bs-toggle="dropdown">
-                                    Research Trackers
-                                </a>
-                                <ul className="dropdown-menu">
-                                    <li>
-                                        <a className="dropdown-item" href="#">
-                                            Accent Table Tracker
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">
-                                            Ceiling Fan Tracker
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            {/* Main Navigation */}
+            <Navbar bg="primary" className="p-0" variant="dark" expand="lg">
+                <Container>
+                    <Navbar.Toggle aria-controls="navbarNavDropdown" />
+                    <Navbar.Collapse id="navbarNavDropdown">
+                        <Nav className="me-auto">
+                            <NavDropdown title="Price & Seller Tracker" id="priceTracker">
+                                <NavDropdown.Item href="#">Account Dashboard</NavDropdown.Item>
+                                <NavDropdown.Item href="#">Matched Accounts</NavDropdown.Item>
+                                <NavDropdown.Item href="#">Unmatched Sellers</NavDropdown.Item>
+                            </NavDropdown>
+
+                            <NavDropdown title="Product Tracker" id="productTracker">
+                                <NavDropdown.Item href="#">Market Share Dashboard</NavDropdown.Item>
+                                <NavDropdown.Item href="#">Website Specifics</NavDropdown.Item>
+                            </NavDropdown>
+
+                            <Nav.Link href="#">Top Seller Tracker</Nav.Link>
+                            <Nav.Link href="#">Top Content Tracker</Nav.Link>
+                            <Nav.Link href="#">Content Creation</Nav.Link>
+                            <Nav.Link href="#">Prospect Tracker</Nav.Link>
+
+                            <Nav.Link as={Link} href="/test" className="active">Content Management</Nav.Link>
+
+                            <NavDropdown title="Research Trackers" id="researchTracker">
+                                <NavDropdown.Item href="#">Accent Table Tracker</NavDropdown.Item>
+                                <NavDropdown.Item href="#">Ceiling Fan Tracker</NavDropdown.Item>
+                            </NavDropdown>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
         </div>
     );
 }

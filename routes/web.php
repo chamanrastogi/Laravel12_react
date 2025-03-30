@@ -27,6 +27,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('test', function () {
     return Inertia::render('test');
 })->name('test');
-
+Route::get('table', [EmployeeController::class,'table'])->name('employees.table');
+Route::get('example', function () {
+    return Inertia::render('example');
+})->name('test');
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

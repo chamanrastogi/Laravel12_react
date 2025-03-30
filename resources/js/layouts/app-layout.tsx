@@ -2,12 +2,13 @@ import AppLayoutTemplate from '@/layouts/app/app-sidebar-layout';
 import { SharedData, type BreadcrumbItem } from '@/types';
 import { usePage } from '@inertiajs/react';
 import 'font-awesome/css/font-awesome.min.css';
+import '../../css/app.css';
 import { useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'primereact/resources/themes/mira/theme.css'; // Theme
-import 'primereact/resources/primereact.min.css'; // Core CSS
+
 import 'primeicons/primeicons.css'; // Icons
-import '../../css/app.css';
+
 interface AppLayoutProps {
     children: React.ReactNode;
     breadcrumbs?: BreadcrumbItem[];
