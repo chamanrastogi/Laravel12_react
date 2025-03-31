@@ -1,11 +1,10 @@
+body {
+    font-size: 12px;
+}
 #logo span.version {
     padding-left: 3px;
     color: #666;
     font-size: 12px;
-}
-
-#contentTabs {
-    font-size: 14px;
 }
 
 .icon-btn {
@@ -17,7 +16,9 @@
 }
 nav .nav-link{
   color: #fff;
-
+}
+.pageheading{
+    font-size: 1.5rem;
 }
 .navbar-nav .nav-link.active, .navbar-nav .nav-link.show{
     background-color: #f7931e;
@@ -26,4 +27,27 @@ nav .nav-link{
 .dropdown:hover .dropdown-menu {
     display: block;
     margin-top: 0; /* remove the gap so it doesn't close */
+}
+.dropdown-item{
+    font-size: 12px;
+}
+.dropdown a:hover{
+    background-color: #f7931e;
+    color:  #fff;
+}
+
+#mainArea{
+    padding: 100px 0 170px 0;
+}
+.form-select{
+    font-size: 12px;
+}
+.contentTable tr th{
+    font-size: 12px;
+}
+.contentTable tr td{
+    font-size: 11px;
+}
+.targetProduct{
+    margin-right: 4rem !important;
 }

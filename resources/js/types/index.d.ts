@@ -56,7 +56,19 @@ export interface NavItem {
     icon?: LucideIcon | null;
     isActive?: boolean;
 }
-
+export interface MainNavItem {
+    title: string;   
+    icon?: LucideIcon | null;
+    isActive?: boolean;
+    subItems?: MainNavItem[];
+    href?: string;
+}
+export interface SidebarNavItem {
+    title: string;
+    href: string;
+    icon?: LucideIcon | null;
+    isActive?: boolean;
+}
 export interface SharedData {
     name: string;
     quote: { message: string; author: string };

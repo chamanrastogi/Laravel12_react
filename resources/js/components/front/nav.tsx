@@ -3,13 +3,14 @@ import { Link } from "@inertiajs/react";
 
 export default function NavBar() {
     return (
-        <div>
+        <>
             {/* Top Navbar */}
-            <Navbar bg="light" variant="light" className="shadow-sm px-3 py-2">
-                <Container className="d-flex justify-content-between">
+            <div className="fixed-top">
+            <Navbar bg="light" variant="light" className="shadow-sm px-0 py-2">
+                <Container  className="d-flex justify-content-between">
                     {/* Logo */}
                     <span className="flex d-flex" id="logo">
-                        <Link href="/table">
+                        <Link href="/">
                             <Image src="/images/logo.png" alt="mySamm Logo"  />
                             </Link>
 
@@ -48,7 +49,7 @@ export default function NavBar() {
                             <Nav.Link href="#">Content Creation</Nav.Link>
                             <Nav.Link href="#">Prospect Tracker</Nav.Link>
 
-                            <Nav.Link as={Link} href="/test" className="active">Content Management</Nav.Link>
+                            <Nav.Link as={Link} href="/content-management" className="active">Content Management</Nav.Link>
 
                             <NavDropdown title="Research Trackers" id="researchTracker">
                                 <NavDropdown.Item href="#">Accent Table Tracker</NavDropdown.Item>
@@ -58,6 +59,7 @@ export default function NavBar() {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-        </div>
+            </div>
+        </>
     );
 }

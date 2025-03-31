@@ -40,6 +40,43 @@ class SellerController extends Controller
         ]);
     }
 
+    public function ajaxPage()
+    {
+        return Inertia::render('backend/sellers/ajaxindex');
+    }
+    public function ajaxIndex(Request $request)
+    {
+        $query = Seller::query();
+
+        // Search filter
+        if ($request->has('seller') && !empty($request->seller)) {
+            $query->where('seller', 'like', '%' . $request->seller . '%');
+        }
+        if ($request->has('city') && !empty($request->city)) {
+            $query->where('seller_city', 'like', '%' . $request->city . '%');
+        }
+        if ($request->has('crawler') && !empty($request->crawler)) {
+            $query->where('crawler', '=',  $request->crawler );
+        }
+        // Sorting (Only apply if sortField is valid)
+        if ($request->has('sortField') && !empty($request->sortField)) {
+            $sortOrder = $request->sortOrder === 'desc' ? 'desc' : 'asc';
+
+            // Prevent SQL injection by ensuring sortField is a valid column
+            $allowedColumns = ['id', 'name', 'email', 'position', 'salary'];
+            if (in_array($request->sortField, $allowedColumns)) {
+                $query->orderBy($request->sortField, $sortOrder);
+            }
+        } else {
+            // Default sorting
+            $query->orderBy('id', 'asc');
+        }
+
+        // Paginate results
+        $sellers = $query->paginate(10);
+
+        return response()->json($sellers);
+    }
     /**
      * Show the form for creating a new resource.
      */

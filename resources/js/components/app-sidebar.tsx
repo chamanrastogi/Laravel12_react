@@ -29,8 +29,18 @@ const mainNavItems: NavItem[] = [
         icon: Option,
     },
     {
+        title: 'Sellers Ajax',
+        href: '/sellers-ajax',
+        icon: Option,
+    },
+    {
         title: 'Employee',
         href: '/employees',
+        icon: Option,
+    },
+    {
+        title: 'Employee Ajax',
+        href: '/employees-ajax',
         icon: Option,
     },
 ];

@@ -20,7 +20,7 @@ const AppFrontLayout: React.FC<Props> = ({ children }) => {
            <Nav/>
 
             {/* Main Content */}
-            <div>{children}</div>
+            <div id="mainArea">{children}</div>
 
             {/* Footer */}
             <Footer/>

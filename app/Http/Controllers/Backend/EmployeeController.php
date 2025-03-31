@@ -17,9 +17,10 @@ class EmployeeController extends Controller
     {
 
         $query = Employee::query();
-
+        $per_page = 10;
         // Search filter
         if ($request->has('search')) {
+
             $query->where('name', 'like', "%{$request->search}%");
             //    ->orWhere('position', 'like', "%{$request->search}%");
         }
@@ -30,12 +31,45 @@ class EmployeeController extends Controller
         }
 
         // Paginate results
-        $employees = $query->paginate(10)->appends($request->query());
+        $employees = $query->paginate($per_page)->appends($request->query());
 
         return Inertia::render('backend/employees/index', [
             'employees' => $employees,
             'filters' => $request->only(['search', 'sortField', 'sortOrder'])
         ]);
+    }
+    public function ajaxPage()
+    {
+        return Inertia::render('backend/employees/ajaxindex');
+    }
+    public function ajaxIndex(Request $request)
+    {
+        $query = Employee::query();
+
+        // Search filter
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('email', 'like', '%' . $request->search . '%');
+        }
+
+        // Sorting (Only apply if sortField is valid)
+        if ($request->has('sortField') && !empty($request->sortField)) {
+            $sortOrder = $request->sortOrder === 'desc' ? 'desc' : 'asc';
+
+            // Prevent SQL injection by ensuring sortField is a valid column
+            $allowedColumns = ['id', 'name', 'email', 'position', 'salary'];
+            if (in_array($request->sortField, $allowedColumns)) {
+                $query->orderBy($request->sortField, $sortOrder);
+            }
+        } else {
+            // Default sorting
+            $query->orderBy('id', 'asc');
+        }
+
+        // Paginate results
+        $employees = $query->paginate(10);
+
+        return response()->json($employees);
     }
     public function table(Request $request)
     {

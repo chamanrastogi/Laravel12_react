@@ -21,7 +21,7 @@ const Employees = () => {
         filters: { search?: string; sortField?: string; sortOrder?: "asc" | "desc" };
     }>().props;
 
-    const [search, setSearch] = useState(filters.search || "");
+    const [search, setSearch] = useState(filters.search || undefined);
     const [sortField, setSortField] = useState(filters.sortField || "");
     const [sortOrder, setSortOrder] = useState(filters.sortOrder === "desc" ? -1 : 1);
     const [loading] = useState(false);
@@ -29,11 +29,19 @@ const Employees = () => {
     // Handle search with debounce effect
     useEffect(() => {
         const timeout = setTimeout(() => {
-            router.get(
-                route("employees.index"),
-                { search },
-                { preserveState: true, preserveScroll: true, only: ["employees"] }
-            );
+            if (search?.trim() !== "") {
+                router.get(
+                    route("employees.index"),
+                    { search:search },
+                    { preserveState: true, preserveScroll: true, only: ["employees"] }
+                );
+            } else {
+                router.get(
+                    route("employees.index"),
+                    {},
+                    { preserveState: true, preserveScroll: true, only: ["employees"] }
+                );
+            }
         }, 300); // Delay for better performance
 
         return () => clearTimeout(timeout);

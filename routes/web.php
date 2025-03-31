@@ -1,14 +1,16 @@
 <?php
 
 use App\Http\Controllers\Backend\EmployeeController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Backend\SellerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\StudentController;
+use App\Http\Controllers\ContentManagementController;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('welcome');
-})->name('home');
+Route::get('/', [HomeController::class,'index'])->name('home');
+
+Route::get('/content-management', [ContentManagementController::class,'index'])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
@@ -23,6 +25,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('student/delete/{student}', [StudentController::class, 'destroy'])->name('student.delete');
     Route::resource('sellers', SellerController::class);
     Route::resource('employees', EmployeeController::class);
+    Route::get('employees-ajax', [EmployeeController::class,'ajaxPage'])->name('employees.ajax');
+    Route::get('sellers-ajax', [SellerController::class, 'ajaxPage'])->name('sellers.ajax');
 });
 Route::get('test', function () {
     return Inertia::render('test');
