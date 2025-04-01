@@ -14,40 +14,84 @@ body {
     border-radius: 5px;
     margin-left: 5px;
 }
-nav .nav-link{
-  color: #fff;
+nav .nav-link {
+    color: #fff;
 }
-.pageheading{
+
+#contentMangement .nav-link {
+    background-color: #009688;
+    color: #fff !important;
+    border-radius: 0 !important;
+    margin: auto 1px;
+}
+#contentMangement .nav-item .active {
+    /* background-color: var(--bs-nav-link-hover-color); */
+    background: #f7931e !important;
+}
+.pageheading {
     font-size: 1.5rem;
 }
-.navbar-nav .nav-link.active, .navbar-nav .nav-link.show{
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.show {
     background-color: #f7931e;
-    color:  #fff;
+    color: #fff;
 }
 .dropdown:hover .dropdown-menu {
     display: block;
     margin-top: 0; /* remove the gap so it doesn't close */
 }
-.dropdown-item{
+.dropdown-item {
     font-size: 12px;
+    border-bottom: 1px solid #ccc;
 }
-.dropdown a:hover{
+.dropdown-item:nth-child(1) {
+    border-top: 1px solid #ccc;
+  }
+.dropdown a:hover {
     background-color: #f7931e;
-    color:  #fff;
+    color: #fff;
 }
 
-#mainArea{
+#mainArea {
     padding: 100px 0 170px 0;
 }
-.form-select{
+.form-select {
     font-size: 12px;
 }
-.contentTable tr th{
+.contentTable tr th {
     font-size: 12px;
 }
-.contentTable tr td{
+.contentTable tr td {
     font-size: 11px;
 }
-.targetProduct{
-    margin-right: 4rem !important;
+.info {
+    font-size: 16px;
 }
+.iconpos {
+    margin-top: -4px;
+}
+
+
+/* Custom Styling for Bootstrap Table */
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+  background-color: #2196f329 !important; /* Light gray background for odd rows */
+  color: #333; /* Dark text for readability */
+}
+
+.table-striped tbody tr:nth-child(even) {
+  background-color: #ffffff !important; /* White background for even rows */
+  color: #000;
+}
+/* Hover Effect */
+.table-striped > tbody > tr:hover > * {
+    background-color: #1976d2 !important; /* Blue hover effect */
+    color: white !important; /* White text on hover */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+
+
+/* Border and Padding Enhancements */
+.table {
+  border: 1px solid #dee2e6; /* Light border */
+}
+

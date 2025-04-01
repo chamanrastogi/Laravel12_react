@@ -1,6 +1,6 @@
 import { ProductProps } from '@/types/cm';
 import { Image } from 'primereact/image';
-import { Button, OverlayTrigger, Table, Tooltip } from 'react-bootstrap';
+import {  OverlayTrigger, Table, Tooltip } from 'react-bootstrap';
 
 // Sample Data
 const tableData = [
@@ -106,12 +106,11 @@ const tableData = [
 const renderTooltip = (message: string) => <Tooltip id="button-tooltip">{message}</Tooltip>;
 export default function ProductNumbers({ product }: ProductProps) {
     return (
-        <div className="container mt-4">
-            <h2> Product Number Page {product}</h2>
+        <div className="container mt-4">           
             <div className="row py-2">
                 <div className="col-2">
                     <div className="text-center">
-                        <Image src="./images/icons/dash_icon1.jpg"></Image>
+                        <Image src="./images/icons/web.png"></Image>
                     </div>
                     <div className="text-center">
                         <span className="fw-bold">
@@ -124,7 +123,7 @@ export default function ProductNumbers({ product }: ProductProps) {
                 </div>
                 <div className="col-3">
                     <div className="text-center">
-                        <Image src="./images/icons/dash_icon2.jpg"></Image>
+                        <Image src="./images/icons/shopping-bag.png"></Image>
                     </div>
                     <div className="text-center">
                         <span className="fw-bold">
@@ -137,7 +136,7 @@ export default function ProductNumbers({ product }: ProductProps) {
                 </div>
                 <div className="col-3">
                     <div className="text-center">
-                        <Image src="./images/icons/dash_icon3.jpg"></Image>
+                        <Image src="./images/icons/out-of-stock.png"></Image>
                     </div>
                     <div className="text-center">
                         <span className="fw-bold">
@@ -162,11 +161,10 @@ export default function ProductNumbers({ product }: ProductProps) {
                     </OverlayTrigger>
                 </div>
             </div>
-            <Table striped bordered hover responsive className="contentTable text-center">
-                <thead className="table-dark">
+            <Table id={product} striped bordered hover responsive className="contentTable text-center">
+                <thead className="table-primary">
                     <tr>
                         <th>Website Name</th>
-
                         <th>Published Data as Of</th>
                         <th>Total Active Products</th>
                         <th>#Products In Stock</th>
@@ -212,10 +210,7 @@ export default function ProductNumbers({ product }: ProductProps) {
                 </tbody>
             </Table>
 
-            <Button variant="primary">
-                <i className="fa fa-download text-danger"></i>
-                Download Grid
-            </Button>
+            
         </div>
     );
 }

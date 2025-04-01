@@ -9,8 +9,11 @@ use App\Http\Controllers\ContentManagementController;
 use Inertia\Inertia;
 
 Route::get('/', [HomeController::class,'index'])->name('home');
-
+Route::get('/top-seller-tracker', function () {
+    return Inertia::render('frontend/top-seller-tracker/TopSellerTracker');
+})->name('topsellertracker');
 Route::get('/content-management', [ContentManagementController::class,'index'])->name('home');
+Route::fallback(fn () => Inertia::render('NotFound'));
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {

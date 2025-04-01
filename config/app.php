@@ -14,6 +14,17 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    /*
+    |----------------------------------------------------------------------
+    | Application Version
+    |----------------------------------------------------------------------
+    |
+    | This value will hold the version of your application. It can be used
+    | in the UI, in notifications, or anywhere else you need to display it.
+    |
+    */
+
+    'version' => env('APP_VERSION', '10.0 beta'),
 
     /*
     |--------------------------------------------------------------------------

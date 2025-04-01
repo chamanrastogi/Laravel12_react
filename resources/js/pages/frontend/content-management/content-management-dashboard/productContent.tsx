@@ -1,6 +1,6 @@
 import { ProductProps } from '@/types/cm';
-import { Button, OverlayTrigger, Table, Tooltip } from 'react-bootstrap';
-
+import { Image } from 'primereact/image';
+import { OverlayTrigger, Table, Tooltip } from 'react-bootstrap';
 // Sample Data
 const tableData = [
     {
@@ -106,10 +106,63 @@ const renderTooltip = (message: string) => <Tooltip id="button-tooltip">{message
 export default function ProductContent({ product }: ProductProps) {
     return (
         <div className="container mt-4">
-            <h2> Product Content Page {product}</h2>
+          
+            <div className="row py-2">
+                <div className="col-2">
+                    <div className="text-center">
+                        <Image src="./images/icons/web.png"></Image>
+                    </div>
+                    <div className="text-center">
+                        <span className="fw-bold">
+                            Website Data{' '}
+                            <OverlayTrigger placement="top" overlay={renderTooltip('List of the websites, data will be displayed for.')}>
+                                <i className="fa fa-info-circle"></i>
+                            </OverlayTrigger>
+                        </span>
+                    </div>
+                </div>
+                <div className="col-3">
+                    <div className="text-center">
+                        <Image src="./images/icons/shopping-bag.png"></Image>
+                    </div>
+                    <div className="text-center">
+                        <span className="fw-bold">
+                            Products Found Data{' '}
+                            <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with 5+ publishedDate.')}>
+                                <i className="fa fa-info-circle"></i>
+                            </OverlayTrigger>
+                        </span>
+                    </div>
+                </div>
+                <div className="col-3">
+                    <div className="text-center">
+                        <Image src="./images/icons/out-of-stock.png"></Image>
+                    </div>
+                    <div className="text-center">
+                        <span className="fw-bold">
+                            Out of stock data{' '}
+                            <OverlayTrigger placement="top" overlay={renderTooltip('% and # of your products')}>
+                                <i className="fa fa-info-circle"></i>
+                            </OverlayTrigger>
+                        </span>
+                    </div>
+                </div>
 
-            <Table striped bordered hover responsive className="contentTable">
-                <thead className="table-dark">
+                <div className="col-4">
+                    <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with 5+ publishedDate.')}>
+                        <div className="flex">
+                            <div className="text-center">
+                                <Image src="./images/icons/check.png"></Image>
+                                <div className="fw-bold">
+                                    SKU <i className="fa fa-info-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </OverlayTrigger>
+                </div>
+            </div>
+            <Table id={product} striped bordered hover responsive className="contentTable">
+                <thead className="table-primary">
                     <tr>
                         <th>Website Name</th>
 
@@ -138,7 +191,7 @@ export default function ProductContent({ product }: ProductProps) {
                 </thead>
                 <tbody>
                     {tableData.map((row, index) => (
-                         <tr key={index} className='text-center'>
+                        <tr key={index} className="text-center">
                             <td>{row.website}</td>
                             <td>{row.publishedDate}</td>
                             <td>{row.totalProducts}</td>
@@ -157,11 +210,6 @@ export default function ProductContent({ product }: ProductProps) {
                     ))}
                 </tbody>
             </Table>
-
-            <Button variant="primary">
-                <i className="fa fa-download text-danger"></i>
-                Download Grid
-            </Button>
         </div>
     );
 }

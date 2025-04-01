@@ -1,12 +1,16 @@
 import AppFrontLayout from '@/layouts/front-layout';
 import { ProductProps } from '@/types/cm';
 import { Head } from '@inertiajs/react';
+import { Image } from 'primereact/image';
 import { useState } from 'react';
-import { Container, Form, OverlayTrigger, Tab, Tabs, Tooltip } from 'react-bootstrap';
+import {  Container, Form, OverlayTrigger, Tab, Tabs, Tooltip } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
-import ProductContent from './content-management-dashboard/productContent';
-import ProductNumbers from './content-management-dashboard/productNumbers';
+import BulkProductUpload from './bulk-target-product-upload/BulkProductUpload';
+
+import CrossSiteHistoricalReportingContent from './cross-site-historical-reporting/CrossSiteHistoricalReportingContent';
 import Account from './individual-account-details/acoount';
+import SkuAutoPullSetup from './setup-sku-auto-pull-management/SkuAutoPullSetup';
+import ContentManagementDashboard from './content-management-dashboard/ContentManagementDashboard';
 const websites = [
     { id: 4, name: 'Amazon' },
     { id: 20, name: 'Bed Bath & Beyond' },
@@ -16,6 +20,10 @@ const websites = [
     { id: 17, name: 'Lowes' },
     { id: 36, name: 'Lumens' },
     { id: 16, name: 'Wayfair' },
+];
+const bulkvideoLinks = [
+    { title: 'Content Alignment - Why does it matter?', src: '#' },
+    { title: 'Understand what content is most important', src: '#' },
 ];
 const videoLinks = [
     { title: 'Content Alignment - Why does it matter?', src: '#' },
@@ -41,16 +49,16 @@ export default function ContentManagement({ product: initialProduct }: ProductPr
     return (
         <AppFrontLayout>
             <Head title="Content Management" />
-            <Container className="mt-4">
+            <Container  id="contentMangement">
                 <h2 className="pageheading">
                     Content Management{' '}
                     <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with 5+ publishedDate.')}>
-                        <i className="fa fa-info-circle fa-1x"></i>
+                        <i className="fa fa-info-circle info me-1"></i>
                     </OverlayTrigger>
-                    <i className="fa fa-file fa-1x px-2"></i>
-                    <Dropdown className="btn p-0">
-                        <Dropdown.Toggle variant="success" className="badge border-0 bg-white" id="dropdown-basic">
-                            <i className="fa fa-book text-dark fa-2x"></i>
+                    <Image src="./images/icons/help_doc.png" className="fa" width="20" />
+                    <Dropdown className="btn border-0 ps-1 iconpos">
+                        <Dropdown.Toggle variant="success" className="badge border-0 bg-white p-0" id="dropdown-basic">
+                            <Image src="./images/icons/play.png" className="fa" width="34" />
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
@@ -65,48 +73,13 @@ export default function ContentManagement({ product: initialProduct }: ProductPr
                 </h2>
 
                 {/* Tabs Navigation */}
-                <Tabs defaultActiveKey="dashboard" id="contentTabs" className="mb-3">
-                    <Tab
-                        eventKey="dashboard"
-                        title={
-                            <>
-                                <i className="fa fa-tachometer-alt"></i> Content Management Dashboard
-                            </>
-                        }
-                    >
-                        <div className="position-absolute targetProduct end-0">
-                            <Form.Label className="fw-bold">Select All Products Or A Target Product List:</Form.Label>
-                            <Form.Select
-                                className="d-inline-block mb-3 w-auto"
-                                value={selectedProduct}
-                                onChange={(e) => setSelectedProduct(e.target.value)}
-                            >
-                                <option value="all">Display All Products</option>
-                                <option value="amazon">Amazon</option>
-                                <option value="wayfair">Wayfair</option>
-                                <option value="lowes">Lowes</option>
-                            </Form.Select>
-                        </div>
-                        <Tabs defaultActiveKey="productnumber" id="uncontrolled-tab-example" className="mb-3">
-                            <Tab eventKey="productnumber" title="Product Numbers">
-                                <ProductNumbers product={selectedProduct} />
-                            </Tab>
-                            <Tab eventKey="productcontent" title="Product Content">
-                                <ProductContent product={selectedProduct} />
-                            </Tab>
-                        </Tabs>
+                <Tabs defaultActiveKey="dashboard" id="contentTabs" className="mb-1" variant="pills">
+                    <Tab className="position-relative" eventKey="dashboard" title={<>Content Management Dashboard</>}>
+                        <ContentManagementDashboard/>
                     </Tab>
 
-                    <Tab
-                        eventKey="account-details"
-                        title={
-                            <>
-                                <i className="fa fa-user"></i> Individual Account Details
-                            </>
-                        }
-                    >
-                        <div className="position-absolute targetProduct end-0">
-                       
+                    <Tab className="position-relative" eventKey="account-details" title={<>Individual Account Details</>}>
+                        <div className="position-absolute end-0">
                             <Form.Select
                                 className="d-inline-block mb-3 w-auto"
                                 value={selectedProduct}
@@ -122,37 +95,32 @@ export default function ContentManagement({ product: initialProduct }: ProductPr
                         <Account />
                     </Tab>
 
-                    <Tab
-                        eventKey="reporting"
-                        title={
-                            <>
-                                <i className="fa fa-chart-line"></i> Cross-Site Historical Reporting
-                            </>
-                        }
-                    >
-                        Cross-Site Historical Reporting Content
+                    <Tab eventKey="reporting" title={<>Cross-Site Historical Reporting</>}>
+                        <CrossSiteHistoricalReportingContent />
                     </Tab>
 
-                    <Tab
-                        eventKey="sku"
-                        title={
-                            <>
-                                <i className="fa fa-barcode"></i> Set Up SKU / Auto Pull Management
-                            </>
-                        }
-                    >
-                        Set Up SKU / Auto Pull Management Content
+                    <Tab eventKey="sku" title={<>Set Up SKU / Auto Pull Management</>}>
+                        <SkuAutoPullSetup />
                     </Tab>
 
-                    <Tab
-                        eventKey="bulk-upload"
-                        title={
-                            <>
-                                <i className="fa fa-book"></i> Bulk Target Product Upload
-                            </>
-                        }
-                    >
-                        Bulk Target Product Upload Content
+                    <Tab className="position-relative" eventKey="bulk-upload" title={<>Bulk Target Product Upload</>}>
+                        <div className="videotargetProduct position-absolute end-0">
+                            <Dropdown className="btn border-0 ps-1">
+                                <Dropdown.Toggle variant="success" className="badge border-0 bg-white" id="dropdown-basic">
+                                    <Image src="./images/icons/play.png" className="fa" width="34" />
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu>
+                                    {bulkvideoLinks.map((video, index) => (
+                                        <Dropdown.Item key={index} href={video.src}>
+                                            {' '}
+                                            {video.title}
+                                        </Dropdown.Item>
+                                    ))}
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </div>
+                        <BulkProductUpload />
                     </Tab>
                 </Tabs>
             </Container>

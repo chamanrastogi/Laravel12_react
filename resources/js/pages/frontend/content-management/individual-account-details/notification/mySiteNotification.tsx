@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function mySiteNotification  () {
+export default function MySiteNotification  () {
     return (
         <div>
            <h2>My Site Notification</h2> 

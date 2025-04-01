@@ -1,19 +1,21 @@
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import SetupNotifications from './SetupNotifications';
+import MySiteNotification from './MySiteNotification';
 
-const notifications = () => {
+export default function Notifications ()  {
     return (
         <>
             <Tabs defaultActiveKey="setup" id="uncontrolled-tab-example" className="mb-3">
                 <Tab eventKey="setup" title="SET UP NOTIFICATIONS">
-                    SET UP NOTIFICATIONS
+                    <SetupNotifications/>
                 </Tab>
                 <Tab eventKey="mynotification" title="MY SITE NOTIFICATIONS">
-                    MY SITE NOTIFICATIONS
+                    <MySiteNotification/>
                 </Tab>
             </Tabs>
         </>
     );
 };
 
-export default notifications;
+

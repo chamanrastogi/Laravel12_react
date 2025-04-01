@@ -39,6 +39,7 @@ export interface SellerTable {
 }
 export interface SharedData {
     name: string;
+    version: string;
     sitename: string;
     quote: { message: string; author: string };
     flash: Notification;
