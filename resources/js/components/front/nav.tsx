@@ -1,11 +1,16 @@
-import { Link, usePage } from '@inertiajs/react';
-import { Button, Container, Image, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { type SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+
+
+import { Button, Container, Image, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+
 
 export default function NavBar() {
     const { url } = usePage();
     const { version } = usePage<SharedData>().props;
-   
+    const { auth } = usePage<SharedData>().props;
+     const cleanup = useMobileNavigation();
     return (
         <>
             {/* Top Navbar */}
@@ -22,7 +27,7 @@ export default function NavBar() {
                         {/* User Actions */}
                         <div className="d-flex align-items-center gap-2">
                             <span>
-                                Welcome, <strong>Demo-Account</strong>
+                                Welcome, <strong>{auth.user.name}</strong>
                             </span>
                             <Button variant="outline-secondary" size="sm">
                                 <i className="fa fa-star"></i>
@@ -32,10 +37,12 @@ export default function NavBar() {
                             </Button>
                             <Button variant="outline-secondary" size="sm">
                                 <i className="fa fa-cog"></i>
-                            </Button>
-                            <Button variant="outline-secondary" size="sm">
+                            </Button>                            
+                                <Link className="btn btn-outline-secondary btn-sm" method="post" href={route('logout')} as="button" onClick={cleanup}>
                                 <i className="fa fa-sign-out"></i>
-                            </Button>
+                                    
+                                </Link>
+                            
                         </div>
                     </Container>
                 </Navbar>
