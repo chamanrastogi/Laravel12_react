@@ -1,4 +1,5 @@
 import { ProductProps } from '@/types/cm';
+import { InfoIcon } from 'lucide-react';
 import { Image } from 'primereact/image';
 import {  OverlayTrigger, Table, Tooltip } from 'react-bootstrap';
 
@@ -101,91 +102,67 @@ const tableData = [
         product_difference: 0,
     },
 ];
-
+const tableImage = [
+    { icon: 'web.png', label: 'Website Data', tooltip: 'Information about websites.', colspan: 2 },
+    { icon: 'shopping-bag.jpg', label: 'Products Found Data', tooltip: 'some data', colspan: 2 },
+    { icon: 'out-of-stock.jpg', label: 'Image Data', tooltip: 'Percentage of products with images.', colspan: 5 },
+    // { icon: 'check.png', label: 'SKU', tooltip: 'Stock Keeping Unit data.', colspan: 2 },
+];
 // Tooltip Component
 const renderTooltip = (message: string) => <Tooltip id="button-tooltip">{message}</Tooltip>;
 export default function ProductNumbers({ product }: ProductProps) {
     return (
-        <div className="container mt-4">           
-            <div className="row py-2">
-                <div className="col-2">
-                    <div className="text-center">
-                        <Image src="./images/icons/web.png"></Image>
-                    </div>
-                    <div className="text-center">
-                        <span className="fw-bold">
-                            Website Data{' '}
-                            <OverlayTrigger placement="top" overlay={renderTooltip('List of the websites, data will be displayed for.')}>
-                                <i className="fa fa-info-circle"></i>
-                            </OverlayTrigger>
-                        </span>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="text-center">
-                        <Image src="./images/icons/shopping-bag.png"></Image>
-                    </div>
-                    <div className="text-center">
-                        <span className="fw-bold">
-                            Products Found Data{' '}
-                            <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with 5+ publishedDate.')}>
-                                <i className="fa fa-info-circle"></i>
-                            </OverlayTrigger>
-                        </span>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="text-center">
-                        <Image src="./images/icons/out-of-stock.png"></Image>
-                    </div>
-                    <div className="text-center">
-                        <span className="fw-bold">
-                        Out of stock data{' '}
-                            <OverlayTrigger placement="top" overlay={renderTooltip('% and # of your products')}>
-                                <i className="fa fa-info-circle"></i>
-                            </OverlayTrigger>
-                        </span>
-                    </div>
-                </div>
-               
-                <div className="col-4">
-                    <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with 5+ publishedDate.')}>
-                        <div className="flex">
-                            <div className="text-center">
-                                <Image src="./images/icons/check.png"></Image>
-                                <div className="fw-bold">
-                                SKU  <i className="fa fa-info-circle"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </OverlayTrigger>
-                </div>
-            </div>
+        < >
             <Table id={product} striped bordered hover responsive className="contentTable text-center">
-                <thead className="table-primary">
-                    <tr>
+                <thead className="border-white">
+                    <tr className="iconHead">
+                        {tableImage.map((item, index) => (
+                            <th key={index} colSpan={item.colspan}>
+                                <Image src={`./images/icons/${item.icon}`} alt={item.label} />
+                                <div className="text-uppercase fw-medium iconText">
+                                    {' '}
+                                    <span className="me-1">{item.label}</span>
+                                    {item.tooltip !== '' && (
+                                        <OverlayTrigger placement="top" overlay={renderTooltip(item.tooltip)}>
+                                            <InfoIcon width={10} className="me-1" />
+                                        </OverlayTrigger>
+                                    )}
+                                </div>
+                            </th>
+                        ))}
+                    </tr>
+                    <tr className="table-dark iconHeadmain align-middle text-white">
                         <th>Website Name</th>
                         <th>Published Data as Of</th>
-                        <th>Total Active Products</th>
-                        <th>#Products In Stock</th>
-                        <th>#Products Out -of-Stock</th>
+                        <th>
+                            Total Active <br /> Products
+                        </th>
+                        <th>
+                            #Products <br />
+                            In Stock
+                        </th>
+                        <th>
+                            #Products Out
+                            <br /> -of-Stock
+                        </th>
                         <th>Products No longer Active</th>
                         <th>
-                            Auto-pull Daily{' '}
+                            Auto-pull Daily <br />
+                            Set Up
                             <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with 5+ publishedDate.')}>
-                                <i className="fa fa-info-circle"></i>
+                                <InfoIcon width={10} className="me-1" />
                             </OverlayTrigger>
                         </th>
                         <th>
-                            Last Date Set Up SKUs Published{' '}
+                            Last Date Set Up
+                            <br /> SKUs
+                            <br /> Published{' '}
                             <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with outstock.')}>
-                                <i className="fa fa-info-circle"></i>
+                                <InfoIcon width={10} className="me-1" />
                             </OverlayTrigger>
                         </th>
 
-                        <th># of products </th>
-                        <th>The # of products we found and created URLs</th>
-                        <th>Difference between Products provide and Products created</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -202,15 +179,11 @@ export default function ProductNumbers({ product }: ProductProps) {
                                 {row.active ? <i className="fa fa-check text-success"></i> : <i className="fa fa-times text-danger"></i>}
                             </td>
                             <td>{row.lastPublished}</td>
-                            <td>{row.products}</td>
-                            <td>{row.found}</td>
-                            <td>{row.product_difference}</td>
+                            
                         </tr>
                     ))}
                 </tbody>
             </Table>
-
-            
-        </div>
+        </>
     );
 }

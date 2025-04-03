@@ -23,7 +23,7 @@ export default function Sellers()  {
     const fetchsellers = async () => {
         setLoading(true);
         const response = await fetch(
-            `/api/sellers?seller=${seller}&city=${city}&crawler=${crawler}&sortField=${sortField}&sortOrder=${sortOrder === 1 ? "asc" : "desc"}&page=${page}`
+            `/sellersadata?seller=${seller}&city=${city}&crawler=${crawler}&sortField=${sortField}&sortOrder=${sortOrder === 1 ? "asc" : "desc"}&page=${page}`
         );
         const data = await response.json();
         setsellers(data.data);

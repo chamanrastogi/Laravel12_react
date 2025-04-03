@@ -11,6 +11,8 @@ import CrossSiteHistoricalReportingContent from './cross-site-historical-reporti
 import Account from './individual-account-details/acoount';
 import SkuAutoPullSetup from './setup-sku-auto-pull-management/SkuAutoPullSetup';
 import ContentManagementDashboard from './content-management-dashboard/ContentManagementDashboard';
+import { InfoIcon } from 'lucide-react';
+
 const websites = [
     { id: 4, name: 'Amazon' },
     { id: 20, name: 'Bed Bath & Beyond' },
@@ -26,21 +28,21 @@ const bulkvideoLinks = [
     { title: 'Understand what content is most important', src: '#' },
 ];
 const videoLinks = [
-    { title: 'Content Alignment - Why does it matter?', src: '#' },
-    { title: 'Understand what content is most important', src: '#' },
-    { title: 'Perform Content Alignment for new products', src: '#' },
-    { title: 'Determine target products', src: '#' },
-    { title: 'Upload target products for a single site', src: '#' },
-    { title: 'Bulk Target Product List Uploads', src: '#' },
-    { title: 'Understanding Primary Categories', src: '#' },
-    { title: 'Manage Content Alignment improvement', src: '#' },
-    { title: 'Using the High-Level Action Report', src: '#' },
-    { title: 'Using the Product Level Action Report', src: '#' },
-    { title: 'Using the Action Reports', src: '#' },
-    { title: 'Find Review Data for My Products', src: '#' },
-    { title: 'Set Up SKU Auto Pull Management', src: '#' },
-    { title: 'Filter Out Unwanted SKUs', src: '#' },
-    { title: 'Delete Target Product Lists', src: '#' },
+    { title: "Content Alignment - Why does it matter?", src: "#" },
+  { title: "Understand what content is most important", src: "#" },
+  { title: "Perform Content Alignment for new products", src: "#" },
+  { title: "Determine target products", src: "#" },
+  { title: "How to upload target products for a single site", src: "#" },
+  { title: "9.0 & 9.1 - Bulk Target Product List Uploads", src: "#" },
+  { title: 'Understanding "Primary" Categories', src: "#" },
+  { title: "Manage Content Alignment improvement", src: "#" },
+  { title: "Using the High-Level Action Report", src: "#" },
+  { title: "Using the Product Level Action Report", src: "#" },
+  { title: "Using the Action Reports", src: "#" },
+  { title: "Find Review Data for My Products", src: "#" },
+  { title: "Set Up SKU Auto Pull Management", src: "#" },
+  { title: "9.1 Filter Out Unwanted SKUs", src: "#" },
+  { title: "How To Delete Target Product Lists", src: "#" },
 ];
 const renderTooltip = (message: string) => <Tooltip id="button-tooltip">{message}</Tooltip>;
 export default function ContentManagement({ product: initialProduct }: ProductProps) {
@@ -49,13 +51,13 @@ export default function ContentManagement({ product: initialProduct }: ProductPr
     return (
         <AppFrontLayout>
             <Head title="Content Management" />
-            <Container  id="contentMangement">
+            <Container  fluid id="contentMangement" className='py-3'>
                 <h2 className="pageheading">
                     Content Management{' '}
                     <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with 5+ publishedDate.')}>
-                        <i className="fa fa-info-circle info me-1"></i>
+                        <InfoIcon width={15} className="me-1"/>
                     </OverlayTrigger>
-                    <Image src="./images/icons/help_doc.png" className="fa" width="20" />
+                    <Image src="./images/icons/help_doc.png" className="fa" width="15" />
                     <Dropdown className="btn border-0 ps-1 iconpos">
                         <Dropdown.Toggle variant="success" className="badge border-0 bg-white p-0" id="dropdown-basic">
                             <Image src="./images/icons/play.png" className="fa" width="34" />

@@ -6,7 +6,7 @@ import MySiteNotification from './MySiteNotification';
 export default function Notifications ()  {
     return (
         <>
-            <Tabs defaultActiveKey="setup" id="uncontrolled-tab-example" className="mb-3">
+            <Tabs defaultActiveKey="setup" id="uncontrolled-tab-example" className="border-0 ">
                 <Tab eventKey="setup" title="SET UP NOTIFICATIONS">
                     <SetupNotifications/>
                 </Tab>

@@ -46,6 +46,7 @@ class SellerController extends Controller
     }
     public function ajaxIndex(Request $request)
     {
+        
         $query = Seller::query();
 
         // Search filter
@@ -69,7 +70,7 @@ class SellerController extends Controller
             }
         } else {
             // Default sorting
-            $query->orderBy('id', 'asc');
+            $query->orderBy('id', 'desc');
         }
 
         // Paginate results

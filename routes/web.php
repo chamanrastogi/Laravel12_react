@@ -8,7 +8,7 @@ use App\Http\Controllers\Backend\StudentController;
 use App\Http\Controllers\ContentManagementController;
 use Inertia\Inertia;
 
-Route::get('/', [HomeController::class,'index'])->name('home');
+Route::get('/userlogin', [HomeController::class,'login'])->name('login');
 
 Route::fallback(fn () => Inertia::render('NotFound'));
 
@@ -27,6 +27,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('employees', EmployeeController::class);
     Route::get('employees-ajax', [EmployeeController::class,'ajaxPage'])->name('employees.ajax');
     Route::get('sellers-ajax', [SellerController::class, 'ajaxPage'])->name('sellers.ajax');
+
+    Route::get('/employeesdata', [EmployeeController::class, 'ajaxIndex']);
+    Route::get('/sellersadata', [SellerController::class, 'ajaxIndex']);
 });
 Route::get('test', function () {
     return Inertia::render('test');
@@ -37,6 +40,7 @@ Route::get('example', function () {
 })->name('test');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/', [HomeController::class,'index'])->name('home');
     Route::get('/top-seller-tracker', function () {
         return Inertia::render('frontend/top-seller-tracker/TopSellerTracker');
     })->name('topsellertracker');

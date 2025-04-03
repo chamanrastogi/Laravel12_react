@@ -29,16 +29,16 @@ export default function NavBar() {
                             <span>
                                 Welcome, <strong>{auth.user.name}</strong>
                             </span>
-                            <Button variant="outline-secondary" size="sm">
+                            <Button variant="outline-dark" size="sm">
                                 <i className="fa fa-star"></i>
                             </Button>
-                            <Button variant="outline-secondary" size="sm">
+                            <Button variant="outline-dark" size="sm">
                                 <i className="fa fa-question"></i>
                             </Button>
-                            <Button variant="outline-secondary" size="sm">
+                            <Button variant="outline-dark" size="sm">
                                 <i className="fa fa-cog"></i>
                             </Button>                            
-                                <Link className="btn btn-outline-secondary btn-sm" method="post" href={route('logout')} as="button" onClick={cleanup}>
+                                <Link className="btn btn-outline-dark btn-sm" method="post" href={route('logout')} as="button" onClick={cleanup}>
                                 <i className="fa fa-sign-out"></i>
                                     
                                 </Link>

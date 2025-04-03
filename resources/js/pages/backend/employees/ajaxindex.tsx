@@ -20,7 +20,7 @@ const Employees = () => {
     const fetchEmployees = async () => {
         setLoading(true);
         const response = await fetch(
-            `/api/employees?search=${search}&sortField=${sortField}&sortOrder=${sortOrder === 1 ? "asc" : "desc"}&page=${page}`
+            `/employeesdata?search=${search}&sortField=${sortField}&sortOrder=${sortOrder === 1 ? "asc" : "desc"}&page=${page}`
         );
         const data = await response.json();
         setEmployees(data.data);
@@ -80,7 +80,9 @@ const Employees = () => {
                     totalRecords={totalRecords}
                     onPageChange={onPageChange}
                 />
+                <p>TotalRecords:{totalRecords}</p>
             </div>
+            
         </AppLayout>
     );
 };

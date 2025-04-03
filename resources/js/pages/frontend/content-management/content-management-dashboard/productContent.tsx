@@ -1,215 +1,208 @@
-import { ProductProps } from '@/types/cm';
+import { InfoIcon } from 'lucide-react';
 import { Image } from 'primereact/image';
-import { OverlayTrigger, Table, Tooltip } from 'react-bootstrap';
+import {  OverlayTrigger, Table, Tooltip } from 'react-bootstrap';
 // Sample Data
 const tableData = [
     {
         website: 'Amazon',
-        publishedDate: '03-31-2025',
-        totalProducts: 7758,
-        stock: 4225,
-        outstock: 3533,
-        active: false,
-        lastPublished: '01-07-2020',
-        products: 0,
-        found: 0,
-        product_difference: 0,
+        percentageWithImages: '37%',
+        productsWithoutImages: 6,
+        percentageWithVideos: '52%',
+        totalReviewRatings: 12246,
+        productsBelow3: 173,
+        percentageBelow3: '8%',
+        averageRating: 4.34,
+        autoPull: false,
+        lastPublished: '01/07/2020',
     },
     {
         website: 'Wayfair',
-        publishedDate: '03-31-2025',
-        totalProducts: 5155,
-        stock: 5107,
-        outstock: 48,
-        active: true,
-        lastPublished: '02-03-2022',
-        products: 0,
-        found: 0,
-        product_difference: 0,
+        percentageWithImages: '62%',
+        productsWithoutImages: 47,
+        percentageWithVideos: '4%',
+        totalReviewRatings: 19585,
+        productsBelow3: 0,
+        percentageBelow3: '2%',
+        averageRating: 4.68,
+        autoPull: true,
+        lastPublished: '02/03/2022',
     },
     {
         website: 'Lowes',
-        publishedDate: '03-31-2025',
-        totalProducts: 1451,
-        stock: 1220,
-        outstock: 231,
-        active: false,
-        lastPublished: '01-07-2020',
-        products: 0,
-        found: 0,
-        product_difference: 0,
+        percentageWithImages: '92%',
+        productsWithoutImages: 0,
+        percentageWithVideos: '100%',
+        totalReviewRatings: 2182,
+        productsBelow3: 44,
+        percentageBelow3: '6%',
+        averageRating: 4.48,
+        autoPull: false,
+        lastPublished: '01/07/2020',
     },
     {
         website: 'Bed Bath & Beyond',
-        publishedDate: '03-31-2025',
-        totalProducts: 7323,
-        stock: 0,
-        outstock: 7323,
-        active: false,
-        lastPublished: '11-10-2019',
-        products: 0,
-        found: 0,
-        product_difference: 0,
+        percentageWithImages: '6%',
+        productsWithoutImages: 0,
+        percentageWithVideos: '0%',
+        totalReviewRatings: 2486,
+        productsBelow3: 46,
+        percentageBelow3: '2%',
+        averageRating: 4.71,
+        autoPull: false,
+        lastPublished: '11/10/2019',
     },
     {
         website: 'Home Depot',
-        publishedDate: '03-31-2025',
-        totalProducts: 989,
-        stock: 896,
-        outstock: 93,
-        active: false,
-        lastPublished: '02-10-2020',
-        products: 0,
-        found: 0,
-        product_difference: 0,
+        percentageWithImages: '74%',
+        productsWithoutImages: 0,
+        percentageWithVideos: '16%',
+        totalReviewRatings: 3657,
+        productsBelow3: 13,
+        percentageBelow3: '2%',
+        averageRating: 4.66,
+        autoPull: false,
+        lastPublished: '02/10/2020',
     },
     {
         website: 'Build',
-        publishedDate: '03-31-2025',
-        totalProducts: 4439,
-        stock: 4439,
-        outstock: 0,
-        active: false,
-        lastPublished: '11-10-2019',
-        products: 0,
-        found: 0,
-        product_difference: 0,
+        percentageWithImages: '41%',
+        productsWithoutImages: 16,
+        percentageWithVideos: '14%',
+        totalReviewRatings: 15451,
+        productsBelow3: 51,
+        percentageBelow3: '2%',
+        averageRating: 4.64,
+        autoPull: false,
+        lastPublished: '11/10/2019',
     },
     {
         website: 'Lumens',
-        publishedDate: '03-31-2025',
-        totalProducts: 2819,
-        stock: 2628,
-        outstock: 191,
-        active: false,
-        lastPublished: '11-05-2024',
-        products: 0,
-        found: 0,
-        product_difference: 0,
+        percentageWithImages: '47%',
+        productsWithoutImages: 0,
+        percentageWithVideos: '6%',
+        totalReviewRatings: 39,
+        productsBelow3: 30,
+        percentageBelow3: '1%',
+        averageRating: 4.59,
+        autoPull: false,
+        lastPublished: '11/05/2024',
     },
     {
         website: 'Lighting New York',
-        publishedDate: '03-31-2025',
-        totalProducts: 3337,
-        stock: 3195,
-        outstock: 142,
-        active: false,
-        lastPublished: '',
-        products: 0,
-        found: 0,
-        product_difference: 0,
+        percentageWithImages: '61%',
+        productsWithoutImages: 0,
+        percentageWithVideos: '0%',
+        totalReviewRatings: 7050,
+        productsBelow3: 10,
+        percentageBelow3: '1%',
+        averageRating: 4.78,
+        autoPull: false,
+        lastPublished: '12/31/1969',
     },
+];
+const tableImage = [
+    { icon: 'web.png', label: 'Website Data', tooltip: 'Information about websites.', colspan: 1 },
+    { icon: 'ca_icon.png', label: 'Content Alignment', tooltip: 'co', colspan: 1 },
+    { icon: 'dash_icon4.jpg', label: 'Image Data', tooltip: 'Percentage of products with images.', colspan: 2 },
+    { icon: 'dash_icon5.jpg', label: 'Video Data', tooltip: 'Percentage of products with videos.', colspan: 1 },
+    { icon: 'dash_icon6.jpg', label: 'Review Rating Data', tooltip: 'Review ratings and statistics.', colspan: 5 },
+    { icon: 'check.png', label: 'SKU', tooltip: 'Stock Keeping Unit data.', colspan: 1 },
 ];
 
 // Tooltip Component
 const renderTooltip = (message: string) => <Tooltip id="button-tooltip">{message}</Tooltip>;
-export default function ProductContent({ product }: ProductProps) {
+export default function ProductContent() {
     return (
-        <div className="container mt-4">
-          
-            <div className="row py-2">
-                <div className="col-2">
-                    <div className="text-center">
-                        <Image src="./images/icons/web.png"></Image>
-                    </div>
-                    <div className="text-center">
-                        <span className="fw-bold">
-                            Website Data{' '}
-                            <OverlayTrigger placement="top" overlay={renderTooltip('List of the websites, data will be displayed for.')}>
-                                <i className="fa fa-info-circle"></i>
-                            </OverlayTrigger>
-                        </span>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="text-center">
-                        <Image src="./images/icons/shopping-bag.png"></Image>
-                    </div>
-                    <div className="text-center">
-                        <span className="fw-bold">
-                            Products Found Data{' '}
-                            <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with 5+ publishedDate.')}>
-                                <i className="fa fa-info-circle"></i>
-                            </OverlayTrigger>
-                        </span>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="text-center">
-                        <Image src="./images/icons/out-of-stock.png"></Image>
-                    </div>
-                    <div className="text-center">
-                        <span className="fw-bold">
-                            Out of stock data{' '}
-                            <OverlayTrigger placement="top" overlay={renderTooltip('% and # of your products')}>
-                                <i className="fa fa-info-circle"></i>
-                            </OverlayTrigger>
-                        </span>
-                    </div>
-                </div>
-
-                <div className="col-4">
-                    <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with 5+ publishedDate.')}>
-                        <div className="flex">
-                            <div className="text-center">
-                                <Image src="./images/icons/check.png"></Image>
-                                <div className="fw-bold">
-                                    SKU <i className="fa fa-info-circle"></i>
+        < >
+            <Table striped bordered hover responsive className="contentTable border border-0 text-center">
+                <thead className="border-white">
+                    <tr className="iconHead">
+                        {tableImage.map((item, index) => (
+                            <th key={index} colSpan={item.colspan}>
+                                <Image src={`./images/icons/${item.icon}`} alt={item.label} />
+                                <div className="text-uppercase fw-medium iconText">
+                                    {' '}
+                                    <span className="me-1">{item.label}</span>
+                                    {item.tooltip !== '' && (
+                                        <OverlayTrigger placement="top" overlay={renderTooltip(item.tooltip)}>
+                                            <InfoIcon width={10} className="me-1" />
+                                        </OverlayTrigger>
+                                    )}
                                 </div>
-                            </div>
-                        </div>
-                    </OverlayTrigger>
-                </div>
-            </div>
-            <Table id={product} striped bordered hover responsive className="contentTable">
-                <thead className="table-primary">
-                    <tr>
+                            </th>
+                        ))}
+                    </tr>
+                    <tr className="table-dark iconHeadmain align-middle text-white">
                         <th>Website Name</th>
-
-                        <th>Published Data as Of</th>
-                        <th>Total Active Products</th>
-                        <th>#Products In Stock</th>
-                        <th>#Products Out -of-Stock</th>
-                        <th>Products No longer Active</th>
                         <th>
-                            Auto-pull Daily{' '}
-                            <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with 5+ publishedDate.')}>
-                                <i className="fa fa-info-circle"></i>
+                            All Products <br /> Since Last
+                            <br /> Comparison
+                        </th>
+                        <th>
+                            % Products with <br />
+                            5+Images
+                        </th>
+                        <th>
+                            Products without <br /> Images
+                        </th>
+                        <th>
+                            % Products with <br />
+                            Videos{' '}
+                        </th>
+                        <th>
+                            Total Number of <br />
+                            Review Ratings{' '}
+                        </th>
+                        <th>
+                            Products with <br />
+                            average below 3
+                        </th>
+                        <th>
+                            %Products with <br />
+                            average below 3
+                        </th>
+                        <th>
+                            Average
+                            <br />
+                            Rating (out of 5)
+                        </th>
+                        <th>
+                            Auto-pull Daily Set Up
+                            <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products out of stock.')}>
+                                <InfoIcon width={10} className="me-1" />
                             </OverlayTrigger>
                         </th>
                         <th>
-                            Last Date Set Up SKUs Published{' '}
-                            <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with outstock.')}>
-                                <i className="fa fa-info-circle"></i>
-                            </OverlayTrigger>
+                            Last Date Set Up
+                            <br /> SKUs
+                            <br />
+                            Published{' '}
+                            <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products out of stock.')}>
+                                <InfoIcon width={10} className="me-1" />
+                            </OverlayTrigger>{' '}
                         </th>
-
-                        <th># of products </th>
-                        <th>The # of products we found and created URLs</th>
-                        <th>Difference between Products provide and Products created</th>
                     </tr>
                 </thead>
                 <tbody>
                     {tableData.map((row, index) => (
                         <tr key={index} className="text-center">
                             <td>{row.website}</td>
-                            <td>{row.publishedDate}</td>
-                            <td>{row.totalProducts}</td>
-                            <td>{row.stock}</td>
-                            <td>{row.outstock}</td>
-                            <td>{row.active ? 0 : 1}</td>
-
-                            <td className="text-center">
-                                {row.active ? <i className="fa fa-check text-success"></i> : <i className="fa fa-times text-danger"></i>}
+                            <td>
+                                <Image src="./images/icons/arrow-up-green-color.png" className="ca-arrow-green-up" width="13"></Image>
                             </td>
+                            <td>{row.percentageWithImages}</td>
+                            <td>{row.productsWithoutImages}</td>
+                            <td>{row.percentageWithVideos}</td>
+                            <td>{row.totalReviewRatings}</td>
+                            <td>{row.productsBelow3}</td>
+                            <td>{row.percentageBelow3}</td>
+                            <td>{row.averageRating}</td>
+                            <td>{row.autoPull ? <i className="fa fa-check text-success"></i> : <i className="fa fa-times text-danger"></i>}</td>
                             <td>{row.lastPublished}</td>
-                            <td>{row.products}</td>
-                            <td>{row.found}</td>
-                            <td>{row.product_difference}</td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
-        </div>
+            </>
     );
 }

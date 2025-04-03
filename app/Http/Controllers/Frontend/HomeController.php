@@ -15,6 +15,10 @@ class HomeController extends Controller
     //
     public function index()
     {
-        return Inertia::render('frontend/home/index');
+        return Inertia::render('frontend/home/Index');
+    }
+    public function login()
+    {
+        return Inertia::render('frontend/login/index');
     }
 }
