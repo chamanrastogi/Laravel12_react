@@ -84,6 +84,7 @@ export default function ContentManagement({ product: initialProduct }: ProductPr
                         <div className="position-absolute end-0">
                             <Form.Select
                                 className="d-inline-block mb-3 w-auto"
+                                size='sm'
                                 value={selectedProduct}
                                 onChange={(e) => setSelectedProduct(e.target.value)}
                             >

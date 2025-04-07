@@ -13,7 +13,7 @@ export default function ContentManagementDashboard() {
         <>
             <div className="position-absolute end-0 pt-1">
                 <Form.Label className="fw-bold me-1">Select All Products Or A Target Product List </Form.Label>
-                <Form.Select className="d-inline-block mb-3 w-auto" value={selectedProduct} onChange={(e) => setSelectedProduct(e.target.value)}>
+                <Form.Select size="sm" className="d-inline-block mt-1 w-auto" value={selectedProduct} onChange={(e) => setSelectedProduct(e.target.value)}>
                     <option value="all">Display All Products</option>
                     <option value="amazon">Amazon</option>
                     <option value="wayfair">Wayfair</option>

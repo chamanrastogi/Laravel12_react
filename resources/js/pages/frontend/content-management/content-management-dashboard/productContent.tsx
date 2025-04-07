@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react';
 import { InfoIcon } from 'lucide-react';
 import { Image } from 'primereact/image';
 import {  OverlayTrigger, Table, Tooltip } from 'react-bootstrap';
@@ -186,7 +187,7 @@ export default function ProductContent() {
                 <tbody>
                     {tableData.map((row, index) => (
                         <tr key={index} className="text-center">
-                            <td>{row.website}</td>
+                           <td><Link href="#" className='link-underline-light'>{row.website}</Link></td>
                             <td>
                                 <Image src="./images/icons/arrow-up-green-color.png" className="ca-arrow-green-up" width="13"></Image>
                             </td>
@@ -197,7 +198,7 @@ export default function ProductContent() {
                             <td>{row.productsBelow3}</td>
                             <td>{row.percentageBelow3}</td>
                             <td>{row.averageRating}</td>
-                            <td>{row.autoPull ? <i className="fa fa-check text-success"></i> : <i className="fa fa-times text-danger"></i>}</td>
+                            <td>{row.autoPull ? <span className='text-success'>✓</span> : <span className='text-danger'>X</span> }</td>
                             <td>{row.lastPublished}</td>
                         </tr>
                     ))}

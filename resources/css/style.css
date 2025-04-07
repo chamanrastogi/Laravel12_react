@@ -1,14 +1,10 @@
-body {
-    margin: 0;
-    padding: 0;
-    background: #fff;
+body {     
     font:
-        12px/16px 'latoregular',
+        12px/16px 'lato',
         Helvetica,
         Arial,
         Lucida,
-        sans-serif;
-    color: #000;
+        sans-serif !important;    
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -45,6 +41,9 @@ nav .nav-link {
 }
 
 /* Table icon text font size */
+.contentTable a{
+    color:#064688;
+}
 .contentTable .iconText,
 .contentTable .iconText th {
     font-size: 11px;
@@ -108,15 +107,7 @@ nav .nav-link {
 {margin-left: 250px;}
 
 /* Custom Styling for Bootstrap Table */
-.table-striped > tbody > tr:nth-of-type(odd) > * {
-    background-color: #2196f329 !important; /* Light gray background for odd rows */
-    color: #333; /* Dark text for readability */
-}
 
-.table-striped tbody tr:nth-child(even) {
-    background-color: #ffffff !important; /* White background for even rows */
-    color: #000;
-}
 /* Hover Effect */
 
 /* Border and Padding Enhancements */
@@ -131,8 +122,8 @@ nav .nav-link {
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-    background: url(/images/login_bg.jpg);
-    background-position: center;
+    background: url(/images/login_page_bg.jpg) center center no-repeat;
+    background-size: cover;
     padding: 30px 12px;
 }
 
@@ -173,4 +164,29 @@ nav .nav-link {
 
 #notification .form-label{
     margin-bottom : 0px;
+}
+
+/* Custom Data Table style */
+
+.custom-datatable .p-datatable-thead > tr > th {
+    background-color: #1e1e2d;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.custom-datatable .p-datatable-tbody > tr > td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 0.6rem;
+    font-size: 12px;
+}
+
+.custom-datatable .p-datatable-tbody > tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.custom-datatable .p-datatable-tbody > tr:nth-child(odd) {
+    background-color: #fff;
 }

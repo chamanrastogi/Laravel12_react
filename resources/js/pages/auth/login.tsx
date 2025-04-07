@@ -1,5 +1,5 @@
 import AppFrontAuthLayout from '@/layouts/front-auth-layout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { Image } from 'primereact/image';
 import { FormEventHandler } from 'react';
 import { Alert, Button, Col, Container, Form, FormControl, InputGroup, Row } from 'react-bootstrap';
@@ -82,12 +82,12 @@ const Login: React.FC<LoginProps> = ({ status }) => {
                                 </Button>
                             </Form>
 
-                            <div className="mt-3 text-center">
+                            {/* <div className="mt-3 text-center">
                                 <span className="text-muted">Don't have an account? </span>
                                 <Link href="/register" className="small">
                                     Sign up
                                 </Link>
-                            </div>
+                            </div> */}
                         </Col>
                     </Row>
                 </Container>

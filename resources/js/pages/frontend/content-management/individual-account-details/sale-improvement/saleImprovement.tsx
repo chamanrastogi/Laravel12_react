@@ -24,12 +24,12 @@ export default function saleImprovement() {
                     </Dropdown>
                 </Col>
 
-                <Col className="d-flex align-items-center col-6">
+                <Col className="d-flex align-items-center col-7">
                     <Form.Label className="col-auto align-self pt-2 me-2 fw-bold">Select All Products Or A Target Product List:</Form.Label>
-                    <Form.Select className="me-2">
+                    <Form.Select className="me-2 w-25" size="sm">
                         <option>Display All Products</option>
                     </Form.Select>
-                    <Button variant="primary" className="btn-sm smallfont col-2">
+                    <Button variant="primary" size="sm" className="btn-sm smallfont col-2">
                         FIX MY CONTENT
                     </Button>
                 </Col>

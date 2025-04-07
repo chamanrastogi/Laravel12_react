@@ -14,6 +14,10 @@ import DashboradContent from './ranking/dashboradContent';
 import AvgWeeklyRank from './ranking/avgWeeklyRank copy';
 import AvgMonthlyRank from './ranking/avgMonthlyRank';
 import Notifications from './notification/notifications';
+import PriceMargin from './price-margin/PriceMargin';
+import ShippingHistory from './shipping-history/ShippingHistory';
+import ProductData from './product-data/ProductData';
+import Ranking from './ranking/ranking';
 
 
 const CustomNavTabs = () => {
@@ -36,8 +40,9 @@ const CustomNavTabs = () => {
 
                 {/* Product Data Dropdown */}
                 <Dropdown as={Nav.Item}>
-                    <Dropdown.Toggle as={Nav.Link} className={activeKey === 'contentHistory' || activeKey === 'imageCheck' || activeKey === 'unmatchedProducts' ? 'active' : ''}>Product Data</Dropdown.Toggle>
+                    <Dropdown.Toggle as={Nav.Link} className={activeKey === 'productData' || activeKey === 'contentHistory' || activeKey === 'imageCheck' || activeKey === 'unmatchedProducts' ? 'active' : ''}>Product Data</Dropdown.Toggle>
                     <Dropdown.Menu>
+                       <Dropdown.Item onClick={() => setActiveKey('productData')}>Product Data</Dropdown.Item>
                         <Dropdown.Item onClick={() => setActiveKey('contentHistory')}>Content History</Dropdown.Item>
                         <Dropdown.Item onClick={() => setActiveKey('imageCheck')}>Image Check</Dropdown.Item>
                         <Dropdown.Item onClick={() => setActiveKey('unmatchedProducts')}>Unmatched Products</Dropdown.Item>
@@ -46,7 +51,7 @@ const CustomNavTabs = () => {
 
                 {/* Content Alignment Dropdown */}
 
-                <NavDropdown title="Content Alignment" id="contentAlignmentDropdown">
+                <NavDropdown title="Content Alignment" id="contentAlignmentDropdown" className={activeKey === 'contentAlignment' || activeKey === 'fixMyContent'  ? 'active' : ''}>
                     <NavDropdown.Item 
                         onClick={() => setActiveKey('contentAlignment')}
                     >
@@ -65,11 +70,17 @@ const CustomNavTabs = () => {
                 <Nav.Item>
                     <Nav.Link eventKey="stockHistory">Stock History</Nav.Link>
                 </Nav.Item>
-
+                <Nav.Item>
+                    <Nav.Link eventKey="priceMargin">Price & Margin</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link eventKey="shippingHistory">Shipping history</Nav.Link>
+                </Nav.Item>
                 {/* Ranking Dropdown */}
                 <Dropdown as={Nav.Item}>
-                    <Dropdown.Toggle as={Nav.Link}>Ranking</Dropdown.Toggle>
+                    <Dropdown.Toggle as={Nav.Link} className={activeKey === 'ranking' || activeKey === 'dashboard' || activeKey === 'weeklyRank' || activeKey === 'monthlyRank' ? 'active' : ''}>Ranking</Dropdown.Toggle>
                     <Dropdown.Menu>
+                       <Dropdown.Item eventKey="ranking">Ranking</Dropdown.Item>
                         <Dropdown.Item eventKey="dashboard">Dashboard</Dropdown.Item>
                         <Dropdown.Item eventKey="weeklyRank">Avg. Weekly Rank</Dropdown.Item>
                         <Dropdown.Item eventKey="monthlyRank">Avg. Monthly Rank</Dropdown.Item>
@@ -87,8 +98,11 @@ const CustomNavTabs = () => {
                 <Tab.Pane eventKey="reviewRatingData">
                     <ReviewRatingDate />
                 </Tab.Pane>
+                <Tab.Pane eventKey="productData">
+                <ProductData />
+                </Tab.Pane>
                 <Tab.Pane eventKey="contentHistory">
-                    <ContentHistory />
+                <ContentHistory />
                 </Tab.Pane>
                 <Tab.Pane eventKey="imageCheck">
                     <ImageCheck />
@@ -107,6 +121,15 @@ const CustomNavTabs = () => {
                 </Tab.Pane>
                 <Tab.Pane eventKey="stockHistory">
                    <StockHistory/>
+                </Tab.Pane>
+                <Tab.Pane eventKey="priceMargin">
+                   <PriceMargin/>
+                </Tab.Pane>
+                <Tab.Pane eventKey="shippingHistory">
+                   <ShippingHistory/>
+                </Tab.Pane>
+                <Tab.Pane eventKey="ranking">
+                <Ranking/>
                 </Tab.Pane>
                 <Tab.Pane eventKey="dashboard">
                 <DashboradContent/>

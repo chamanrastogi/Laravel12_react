@@ -32,7 +32,7 @@ export default function SetupNotifications() {
                     </Form.Label>
                 </div>
                 <div className="col-auto p-0">
-                    <Form.Select>
+                    <Form.Select size="sm">
                         <option>Display All Products</option>
                     </Form.Select>
                 </div>
@@ -53,7 +53,7 @@ export default function SetupNotifications() {
                     </Form.Label>
                 </div>
                 <div className="col-auto p-0">
-                    <Form.Select>
+                    <Form.Select size="sm">
                         <option value="1">Daily: Analyzes DOD changes</option>
                         <option value="2">Weekly(Tuesday): Analyzes prior 7 day changes</option>
                         <option value="3">Monthly (First Tuesday): Analyzes prior month changes</option>
@@ -110,7 +110,7 @@ export default function SetupNotifications() {
                     </Form.Label>
                 </div>
                 <div className="col-4 p-0">
-                <Form.Control type="text" placeholder="Enter notification name" />
+                <Form.Control type="text" size="sm" placeholder="Enter notification name" />
                 </div>
                 
             </Row>

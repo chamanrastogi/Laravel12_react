@@ -1,4 +1,5 @@
 import { ProductProps } from '@/types/cm';
+import { Link } from '@inertiajs/react';
 import { InfoIcon } from 'lucide-react';
 import { Image } from 'primereact/image';
 import {  OverlayTrigger, Table, Tooltip } from 'react-bootstrap';
@@ -168,15 +169,17 @@ export default function ProductNumbers({ product }: ProductProps) {
                 <tbody>
                     {tableData.map((row, index) => (
                         <tr key={index} className="text-center">
-                            <td>{row.website}</td>
+                            <td><Link href="#" className='link-underline-light'>{row.website}</Link></td>
                             <td>{row.publishedDate}</td>
-                            <td>{row.totalProducts}</td>
-                            <td>{row.stock}</td>
-                            <td>{row.outstock}</td>
+                            
+                            <td><Link href="#" className='link-underline-light'>{row.totalProducts}</Link></td>
+                            <td><Link href="#" className='link-underline-light'>{row.stock}</Link></td>
+                            <td><Link href="#" className='link-underline-light'>{row.outstock}</Link></td>
+                            
                             <td>{row.active ? 0 : 1}</td>
 
                             <td className="text-center">
-                                {row.active ? <i className="fa fa-check text-success"></i> : <i className="fa fa-times text-danger"></i>}
+                                {row.active ? <span className='text-success'>✓</span> : <span className='text-danger'>X</span> }
                             </td>
                             <td>{row.lastPublished}</td>
                             
