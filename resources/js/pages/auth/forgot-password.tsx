@@ -1,14 +1,18 @@
-// Components
 import { Head, useForm } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
+import { Image } from 'primereact/image';
+import {
+    Alert,
+    Button,
+    Col,
+    Container,
+    Form,
+    FormControl,
+    InputGroup,
+    Row,
+} from 'react-bootstrap';
 
-import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout';
+import AppFrontAuthLayout from '@/layouts/front-auth-layout';
 
 export default function ForgotPassword({ status }: { status?: string }) {
     const { data, setData, post, processing, errors } = useForm<Required<{ email: string }>>({
@@ -17,47 +21,75 @@ export default function ForgotPassword({ status }: { status?: string }) {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
         post(route('password.email'));
     };
 
     return (
-        <AuthLayout title="Forgot password" description="Enter your email to receive a password reset link">
-            <Head title="Forgot password" />
+        <AppFrontAuthLayout>
+            <Head title="Forgot Password" />
+            <div className="login-card">
+                <Container className="d-flex justify-content-center align-items-center">
+                    <Row className="w-100">
+                        <div className="d-flex justify-content-center align-items-center pb-3">
+                            <Image src="/images/logo.png" />
+                        </div>
+                        <Col md={6} className="login-main mx-auto">
+                            <div className="mb-4 text-center">
+                                <h2>Forgot your password?</h2>
+                                <p className="text-muted">
+                                    Enter your email and we’ll send you a reset link.
+                                </p>
+                            </div>
 
-            {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
+                            {status && (
+                                <Alert variant="success" className="text-center">
+                                    {status}
+                                </Alert>
+                            )}
 
-            <div className="space-y-6">
-                <form onSubmit={submit}>
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            name="email"
-                            autoComplete="off"
-                            value={data.email}
-                            autoFocus
-                            onChange={(e) => setData('email', e.target.value)}
-                            placeholder="email@example.com"
-                        />
+                            <Form onSubmit={submit}>
+                                <Form.Group className="mb-3" controlId="email">
+                                    <Form.Label>Email address</Form.Label>
+                                    <InputGroup>
+                                        <FormControl
+                                            type="email"
+                                            placeholder="email@example.com"
+                                            required
+                                            name="email"
+                                            value={data.email}
+                                            onChange={(e) => setData('email', e.target.value)}
+                                            disabled={processing}
+                                            autoFocus
+                                        />
+                                    </InputGroup>
+                                    {errors.email && (
+                                        <small className="text-danger">{errors.email}</small>
+                                    )}
+                                </Form.Group>
 
-                        <InputError message={errors.email} />
-                    </div>
+                                <Button
+                                    type="submit"
+                                    variant="primary"
+                                    className="w-100"
+                                    disabled={processing}
+                                >
+                                    {processing && (
+                                        <span className="spinner-border spinner-border-sm me-2" />
+                                    )}
+                                    Email password reset link
+                                </Button>
+                            </Form>
 
-                    <div className="my-6 flex items-center justify-start">
-                        <Button className="w-full" disabled={processing}>
-                            {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                            Email password reset link
-                        </Button>
-                    </div>
-                </form>
-
-                <div className="text-muted-foreground space-x-1 text-center text-sm">
-                    <span>Or, return to</span>
-                    <TextLink href={route('login')}>log in</TextLink>
-                </div>
+                            <div className="mt-3 text-center">
+                                <span className="text-muted">Remember your password? </span>
+                                <a href={route('login')} className="small">
+                                    Log in
+                                </a>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
             </div>
-        </AuthLayout>
+        </AppFrontAuthLayout>
     );
 }

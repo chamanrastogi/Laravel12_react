@@ -5,7 +5,7 @@ export default function SetupNotifications() {
             <h6 className="fw-bold me-2 mt-2">Set up New Email Notifications</h6>
 
             {/* Enter Notification Emails */}
-            <Row g-3 align-items-center className="mb-2">
+            <Row  className="mb-2 align-items-center g-3">
                 <div className="align-self-center col-auto">
                     <Form.Label>
                         <strong>1) Enter Notification Email(s):</strong>
@@ -25,7 +25,7 @@ export default function SetupNotifications() {
             </Row>
 
             {/* Select Products */}
-            <Row g-3 align-items-center className="mb-2">
+            <Row  className="mb-2 align-items-center g-3">
                 <div className="align-self-center col-auto">
                     <Form.Label>
                         <strong>2) Select All Products Or A Target Product List</strong>
@@ -46,7 +46,7 @@ export default function SetupNotifications() {
                 </div>
             </Row>
             {/* Select Notification Frequency */}
-            <Row g-3 align-items-center className="mb-2">
+            <Row  className="mb-2 align-items-center g-3">
                 <div className="align-self-center col-auto">
                     <Form.Label>
                         <strong>3) Select Notification Frequency</strong>
@@ -103,7 +103,7 @@ export default function SetupNotifications() {
 
             {/* Enter Notification Name */}
 
-            <Row g-3 align-items-center className="mb-2">
+            <Row className="mb-2 align-items-center g-3">
                 <div className="align-self-center col-auto">
                     <Form.Label>
                     <strong>5) Enter Notification Name:</strong>

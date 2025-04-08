@@ -17,7 +17,7 @@ import Notifications from './notification/notifications';
 import PriceMargin from './price-margin/PriceMargin';
 import ShippingHistory from './shipping-history/ShippingHistory';
 import ProductData from './product-data/ProductData';
-import Ranking from './ranking/ranking';
+import Ranking from './ranking/Ranking';
 
 
 const CustomNavTabs = () => {

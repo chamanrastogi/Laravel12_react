@@ -1,0 +1,20 @@
+/* Sales Improvement boxes */
+.salebox{
+    height: 250px;
+    background: #e7f8f8;
+}
+.salebox p{
+    margin-bottom: 0.3rem;
+}
+.salebox .box1{
+    background: #6db060;
+}
+.salebox .box2{
+    background: #009688;
+}
+.salebox .box3{
+    background: #f27979;
+}
+.salebox .box4{
+    background: #198a0b;
+}

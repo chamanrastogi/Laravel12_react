@@ -1,14 +1,14 @@
 import { Image } from 'primereact/image';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
-
+import "./salesimprove.css";
 const videoLinks = [{ title: 'Content Alignment - Why does it matter?', src: '#' }];
 
 export default function saleImprovement() {
     return (
         <Container fluid className="mt-1 border border-1 px-3 pt-2">
             <Row className="d-flex justify-content-start mb-4 pb-1 border-bottom">
-                <Col m className="d-flex align-items-center col-3">
+                <Col  className="d-flex align-items-center col-3">
                     <h6 className="me-2 fw-bold mt-2">Sales Improvement Funnel:</h6>
                     <Dropdown className="iconpos">
                         <Dropdown.Toggle variant="white" className="border-0 p-0">

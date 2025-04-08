@@ -32,17 +32,13 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(route('dashboard', absolute: false));
+        $notification = [
+            'status' => 'success', // Can be 'error' or 'success'
+            'message' => 'Welcome back, ' . Auth::user()->name . '!',
+        ];
+        return redirect()->intended(route('content.management', absolute: false))->with('notification', $notification);
     }
-    public function storefn(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        return redirect()->intended(route('content.management', absolute: false));
-    }
+    
     /**
      * Destroy an authenticated session.
      */

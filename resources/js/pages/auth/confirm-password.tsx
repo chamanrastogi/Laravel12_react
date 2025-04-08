@@ -1,13 +1,17 @@
-// Components
 import { Head, useForm } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
+import { Image } from 'primereact/image';
+import {
+    Button,
+    Col,
+    Container,
+    Form,
+    FormControl,
+    InputGroup,
+    Row,
+} from 'react-bootstrap';
 
-import InputError from '@/components/input-error';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout';
+import AppFrontAuthLayout from '@/layouts/front-auth-layout';
 
 export default function ConfirmPassword() {
     const { data, setData, post, processing, errors, reset } = useForm<Required<{ password: string }>>({
@@ -16,45 +20,64 @@ export default function ConfirmPassword() {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
         post(route('password.confirm'), {
             onFinish: () => reset('password'),
         });
     };
 
     return (
-        <AuthLayout
-            title="Confirm your password"
-            description="This is a secure area of the application. Please confirm your password before continuing."
-        >
-            <Head title="Confirm password" />
+        <AppFrontAuthLayout>
+            <Head title="Confirm Password" />
+            <div className="login-card">
+                <Container className="d-flex justify-content-center align-items-center">
+                    <Row className="w-100">
+                        <div className="d-flex justify-content-center align-items-center pb-3">
+                            <Image src="/images/logo.png" />
+                        </div>
+                        <Col md={6} className="login-main mx-auto">
+                            <div className="mb-4 text-center">
+                                <h2>Confirm your password</h2>
+                                <p className="text-muted">
+                                    This is a secure area. Please confirm your password before continuing.
+                                </p>
+                            </div>
 
-            <form onSubmit={submit}>
-                <div className="space-y-6">
-                    <div className="grid gap-2">
-                        <Label htmlFor="password">Password</Label>
-                        <Input
-                            id="password"
-                            type="password"
-                            name="password"
-                            placeholder="Password"
-                            autoComplete="current-password"
-                            value={data.password}
-                            autoFocus
-                            onChange={(e) => setData('password', e.target.value)}
-                        />
+                            <Form onSubmit={submit}>
+                                <Form.Group className="mb-3" controlId="password">
+                                    <Form.Label>Password</Form.Label>
+                                    <InputGroup>
+                                        <FormControl
+                                            type="password"
+                                            placeholder="Password"
+                                            required
+                                            name="password"
+                                            value={data.password}
+                                            onChange={(e) => setData('password', e.target.value)}
+                                            autoFocus
+                                            disabled={processing}
+                                        />
+                                    </InputGroup>
+                                    {errors.password && (
+                                        <small className="text-danger">{errors.password}</small>
+                                    )}
+                                </Form.Group>
 
-                        <InputError message={errors.password} />
-                    </div>
-
-                    <div className="flex items-center">
-                        <Button className="w-full" disabled={processing}>
-                            {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                            Confirm password
-                        </Button>
-                    </div>
-                </div>
-            </form>
-        </AuthLayout>
+                                <Button
+                                    type="submit"
+                                    variant="primary"
+                                    className="w-100"
+                                    disabled={processing}
+                                >
+                                    {processing && (
+                                        <span className="spinner-border spinner-border-sm me-2" />
+                                    )}
+                                    Confirm password
+                                </Button>
+                            </Form>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+        </AppFrontAuthLayout>
     );
 }

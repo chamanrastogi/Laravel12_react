@@ -1,0 +1,22 @@
+.custom-datatable .p-datatable-thead > tr > th {
+    background-color: #1e1e2d;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.custom-datatable .p-datatable-tbody > tr > td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 0.6rem;
+    font-size: 12px;
+}
+
+.custom-datatable .p-datatable-tbody > tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.custom-datatable .p-datatable-tbody > tr:nth-child(odd) {
+    background-color: #fff;
+}

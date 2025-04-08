@@ -1,12 +1,17 @@
 import { Head, useForm } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
+import { Image } from 'primereact/image';
+import {
+    Button,
+    Col,
+    Container,
+    Form,
+    FormControl,
+    InputGroup,
+    Row,
+} from 'react-bootstrap';
 
-import InputError from '@/components/input-error';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout';
+import AppFrontAuthLayout from '@/layouts/front-auth-layout';
 
 interface ResetPasswordProps {
     token: string;
@@ -22,8 +27,8 @@ type ResetPasswordForm = {
 
 export default function ResetPassword({ token, email }: ResetPasswordProps) {
     const { data, setData, post, processing, errors, reset } = useForm<Required<ResetPasswordForm>>({
-        token: token,
-        email: email,
+        token,
+        email,
         password: '',
         password_confirmation: '',
     });
@@ -36,63 +41,76 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
     };
 
     return (
-        <AuthLayout title="Reset password" description="Please enter your new password below">
-            <Head title="Reset password" />
+        <AppFrontAuthLayout>
+            <Head title="Reset Password" />
+            <div className="login-card">
+                <Container className="d-flex justify-content-center align-items-center">
+                    <Row className="w-100">
+                        <div className="d-flex justify-content-center align-items-center pb-3">
+                            <Image src="/images/logo.png" />
+                        </div>
+                        <Col md={6} className="login-main mx-auto">
+                            <div className="mb-4 text-center">
+                                <h2>Reset your password</h2>
+                                <p className="text-muted">Please enter your new password below.</p>
+                            </div>
 
-            <form onSubmit={submit}>
-                <div className="grid gap-6">
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            name="email"
-                            autoComplete="email"
-                            value={data.email}
-                            className="mt-1 block w-full"
-                            readOnly
-                            onChange={(e) => setData('email', e.target.value)}
-                        />
-                        <InputError message={errors.email} className="mt-2" />
-                    </div>
+                            <Form onSubmit={submit}>
+                                <Form.Group className="mb-3" controlId="email">
+                                    <Form.Label>Email address</Form.Label>
+                                    <InputGroup>
+                                        <FormControl
+                                            type="email"
+                                            value={data.email}
+                                            readOnly
+                                            onChange={(e) => setData('email', e.target.value)}
+                                        />
+                                    </InputGroup>
+                                    {errors.email && <small className="text-danger">{errors.email}</small>}
+                                </Form.Group>
 
-                    <div className="grid gap-2">
-                        <Label htmlFor="password">Password</Label>
-                        <Input
-                            id="password"
-                            type="password"
-                            name="password"
-                            autoComplete="new-password"
-                            value={data.password}
-                            className="mt-1 block w-full"
-                            autoFocus
-                            onChange={(e) => setData('password', e.target.value)}
-                            placeholder="Password"
-                        />
-                        <InputError message={errors.password} />
-                    </div>
+                                <Form.Group className="mb-3" controlId="password">
+                                    <Form.Label>New Password</Form.Label>
+                                    <InputGroup>
+                                        <FormControl
+                                            type="password"
+                                            placeholder="Password"
+                                            required
+                                            name="password"
+                                            autoFocus
+                                            value={data.password}
+                                            onChange={(e) => setData('password', e.target.value)}
+                                        />
+                                    </InputGroup>
+                                    {errors.password && <small className="text-danger">{errors.password}</small>}
+                                </Form.Group>
 
-                    <div className="grid gap-2">
-                        <Label htmlFor="password_confirmation">Confirm password</Label>
-                        <Input
-                            id="password_confirmation"
-                            type="password"
-                            name="password_confirmation"
-                            autoComplete="new-password"
-                            value={data.password_confirmation}
-                            className="mt-1 block w-full"
-                            onChange={(e) => setData('password_confirmation', e.target.value)}
-                            placeholder="Confirm password"
-                        />
-                        <InputError message={errors.password_confirmation} className="mt-2" />
-                    </div>
+                                <Form.Group className="mb-4" controlId="password_confirmation">
+                                    <Form.Label>Confirm Password</Form.Label>
+                                    <InputGroup>
+                                        <FormControl
+                                            type="password"
+                                            placeholder="Confirm password"
+                                            required
+                                            name="password_confirmation"
+                                            value={data.password_confirmation}
+                                            onChange={(e) => setData('password_confirmation', e.target.value)}
+                                        />
+                                    </InputGroup>
+                                    {errors.password_confirmation && (
+                                        <small className="text-danger">{errors.password_confirmation}</small>
+                                    )}
+                                </Form.Group>
 
-                    <Button type="submit" className="mt-4 w-full" disabled={processing}>
-                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Reset password
-                    </Button>
-                </div>
-            </form>
-        </AuthLayout>
+                                <Button type="submit" variant="primary" className="w-100" disabled={processing}>
+                                    {processing && <span className="spinner-border spinner-border-sm me-2" />}
+                                    Reset password
+                                </Button>
+                            </Form>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+        </AppFrontAuthLayout>
     );
 }

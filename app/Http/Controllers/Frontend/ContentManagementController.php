@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\AmericanBathGroupProductFound;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 
 class ContentManagementController extends Controller
@@ -18,7 +21,7 @@ class ContentManagementController extends Controller
 
     public function ajaxProducts(Request $request)
     {
-        
+       // dd($request);
         $query = AmericanBathGroupProductFound::select([
             'id',
             'product_sku',
@@ -38,6 +41,24 @@ class ContentManagementController extends Controller
             'romance_copy',
             'modified as last_updated',
         ]);
+    
+        // Sorting
+        if ($request->filled('sortField') && $request->filled('sortOrder')) {
+            $sortOrder = $request->sortOrder == 1 ? 'asc' : 'desc';
+            $query->orderBy($request->sortField, $sortOrder);
+        }
+    
+        // Filtering
+        if ($request->filled('filters')) {
+            $filters = json_decode($request->filters, true);
+    
+            foreach ($filters as $field => $filter) {
+                $value = Arr::get($filter, 'value');
+                if ($value !== null && $value !== '') {
+                    $query->where($field, 'LIKE', "%$value%");
+                }
+            }
+        }
 
         // Optionally add sorting/filtering here...
 

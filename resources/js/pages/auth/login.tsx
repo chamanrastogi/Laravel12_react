@@ -24,7 +24,7 @@ const Login: React.FC<LoginProps> = ({ status }) => {
 
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('loginfn'), {
+        post(route('login'), {
             onFinish: () => reset('password'),
         });
     };

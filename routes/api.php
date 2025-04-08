@@ -11,6 +11,3 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::get('/users', function (Request $request) {
-    return User::all();
-});

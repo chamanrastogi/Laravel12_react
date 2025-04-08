@@ -5,7 +5,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import '../../css/app.css';
 import { useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import 'primereact/resources/themes/mira/theme.css'; // Theme
+
 import 'primeicons/primeicons.css'; // Icons
 
 interface AppLayoutProps {
