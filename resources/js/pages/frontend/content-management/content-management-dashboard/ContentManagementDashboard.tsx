@@ -3,13 +3,14 @@ import { useState } from 'react';
 import { Button, Form, Tab, Tabs } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ProductContent from './ProductContent';
-import ProductNumbers from './productNumbers';
+import ProductNumbers from './ProductNumbers';
 
 
 const videoLinks = [{ title: '9.0 - Content Management Dashboard', src: '#' }];
 export default function ContentManagementDashboard() {
     const initialProduct = 'all'; // Define a default value for initialProduct
     const [selectedProduct, setSelectedProduct] = useState<string>(initialProduct || 'all');
+    const [activeKey, setActiveKey] = useState('productnumber');
     return (
         <>
             <div className="position-absolute end-0 pt-1">
@@ -37,12 +38,12 @@ export default function ContentManagementDashboard() {
                     </Dropdown.Menu>
                 </Dropdown>
             </div>
-            <Tabs defaultActiveKey="productnumber" id="uncontrolled-tab-example" className="border-bottom border-top py-1" variant="pills">
+            <Tabs activeKey={activeKey} onSelect={(k) => k && setActiveKey(k)} id="uncontrolled-tab-example" className="border-bottom border-top py-1" variant="pills">
                 <Tab eventKey="productnumber" title="Product Numbers">
-                    <ProductNumbers product={selectedProduct} />
+                {activeKey === 'productnumber' && <ProductNumbers product={selectedProduct} />}
                 </Tab>
                 <Tab eventKey="productcontent" title="Product Content">
-                    <ProductContent />
+                {activeKey === 'productcontent' && <ProductContent />}
                 </Tab>
             </Tabs>
             <div className="text-end">

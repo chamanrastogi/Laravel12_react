@@ -1,30 +1,29 @@
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 
-import ManageTargetProducts from './ManageTargetProducts';
-import ImageCheckUpload from './ImageCheckUpload';
-import BulkUpdateUpload from './BulkUpdateUpload';
+import { useState } from 'react';
 import AllTargetProducts from './AllTargetProducts';
+import BulkUpdateUpload from './BulkUpdateUpload';
+import ImageCheckUpload from './ImageCheckUpload';
+import ManageTargetProducts from './ManageTargetProducts';
 
 export default function BulkProductUpload() {
+    const [activeKey, setActiveKey] = useState('bulkUpdateUpload');
     return (
         <>
-            <Tabs defaultActiveKey="BulkUpdateUpload" id="uncontrolled-tab-example" className="mb-3">
-                <Tab eventKey="BulkUpdateUpload" title="BULK UPDATE/UPLOAD">
-                   <BulkUpdateUpload/>
+            <Tabs activeKey={activeKey} onSelect={(k) => k && setActiveKey(k)} id="uncontrolled-tab-example" className="mb-3">
+                <Tab eventKey="bulkUpdateUpload" title="BULK UPDATE/UPLOAD">
+                    {activeKey === 'bulkUpdateUpload' && <BulkUpdateUpload />}
                 </Tab>
-                <Tab eventKey="ImageCheckUpload" title="IMAGE CHECK UPLOAD">
-                    <ImageCheckUpload/>
+                <Tab eventKey="imageCheckUpload" title="IMAGE CHECK UPLOAD">
+                    {activeKey === 'imageCheckUpload' && <ImageCheckUpload />}
                 </Tab>
-                <Tab eventKey="ManageTargetProducts" title="MANAGE TARGET PRODUCT LISTS" >
-                    <ManageTargetProducts/>
+                <Tab eventKey="manageTargetProducts" title="MANAGE TARGET PRODUCT LISTS">
+                    {activeKey === 'manageTargetProducts' && <ManageTargetProducts />}
                 </Tab>
-                <Tab eventKey="AllTargetProducts" title="ALL TARGET PRODUCTS" >
-                    <AllTargetProducts/>
+                <Tab eventKey="allTargetProducts" title="ALL TARGET PRODUCTS">
+                    {activeKey === 'allTargetProducts' && <AllTargetProducts />}
                 </Tab>
-             
-                
-                
             </Tabs>
         </>
     );

@@ -113,6 +113,9 @@ nav .nav-link {
 .ca-arrow-green-up img {
     transform: rotate(50deg);
 }
+.search{
+    margin-top: -10px;
+}
 
 
 

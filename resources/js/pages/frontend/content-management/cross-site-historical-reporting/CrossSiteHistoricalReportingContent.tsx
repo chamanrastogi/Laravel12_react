@@ -1,20 +1,22 @@
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import PricingStockStatus from './pricingStockStatus';
-import ProductContent from './productContent';
-import SavedAutomatedReporting from './savedAutomatedReporting';
+import PricingStockStatus from './PricingStockStatus';
+import ProductContent from './ProductContent';
+import SavedAutomatedReporting from './SavedAutomatedReporting';
+import { useState } from 'react';
 export default function CrossSiteHistoricalReportingContent() {
+    const [activeKey, setActiveKey] = useState('priceStockStatus');
     return (
         <>
-            <Tabs defaultActiveKey="priceStockStatus" id="uncontrolled-tab-example" className="mb-3">
+            <Tabs activeKey={activeKey} onSelect={(k) => k && setActiveKey(k)} id="uncontrolled-tab-example" className="mb-3">
                 <Tab eventKey="priceStockStatus" title="Pricing & Stock Status">
-                <PricingStockStatus/>
+                {activeKey === 'priceStockStatus' &&  <PricingStockStatus/>}
                 </Tab>
                 <Tab eventKey="productContent" title="Product Content">
-               <ProductContent/>
+                {activeKey === 'productContent' &&  <ProductContent/>}
                 </Tab>
                 <Tab eventKey="SavedAutomatedReporting" title="Saved Automated Reporting" >
-                <SavedAutomatedReporting/>
+                {activeKey === 'SavedAutomatedReporting' &&  <SavedAutomatedReporting/>}
                 </Tab>
             </Tabs>
         </>

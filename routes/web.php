@@ -16,9 +16,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/top-seller-tracker', function () {
         return Inertia::render('frontend/top-seller-tracker/TopSellerTracker');
     })->name('topsellertracker');
-    Route::get('/content-management', [ContentManagementController::class, 'index'])->name('content.management');   
+    Route::get('/content-management', [ContentManagementController::class, 'index'])->name('content.management');
     Route::get('ajaxProducts', [ContentManagementController::class, 'ajaxProducts'])->name('content.management.products');
-   
+    Route::get('ajaxProductsMargin', [ContentManagementController::class, 'ajaxProductsMargin'])->name('content.management.ajaxProductsMargin');
+    Route::get('ajaxOverviewDataTab', [ContentManagementController::class, 'ajaxOverviewDataTab'])->name('content.management.ajaxOverviewDataTab');
+
+
 });
 
 require __DIR__ . '/auth.php';

@@ -47,7 +47,7 @@ const videoLinks = [
 const renderTooltip = (message: string) => <Tooltip id="button-tooltip">{message}</Tooltip>;
 export default function ContentManagement({ product: initialProduct }: ProductProps) {
     const [selectedProduct, setSelectedProduct] = useState<string>(initialProduct || 'all');
-
+    const [activeKey, setActiveKey] = useState<string>('dashboard'); // active tab state
     return (
         <AppFrontLayout>
             <Head title="Content Management" />
@@ -75,12 +75,13 @@ export default function ContentManagement({ product: initialProduct }: ProductPr
                 </h2>
 
                 {/* Tabs Navigation */}
-                <Tabs defaultActiveKey="dashboard" id="contentTabs" className="mb-1" variant="pills">
-                    <Tab className="position-relative" eventKey="dashboard" title={<>Content Management Dashboard</>}>
-                        <ContentManagementDashboard/>
+                <Tabs activeKey={activeKey}
+                    onSelect={(k) => k && setActiveKey(k)} id="contentTabs" className="mb-1" variant="pills">
+                    <Tab className="position-relative" eventKey="dashboard" title={<>Content Management Dashboard</>}>                        
+                        {activeKey === 'dashboard' && <ContentManagementDashboard />}
                     </Tab>
 
-                    <Tab className="position-relative" eventKey="account-details" title={<>Individual Account Details</>}>
+                    <Tab className="position-relative" eventKey="account" title={<>Individual Account Details</>}>
                         <div className="position-absolute end-0">
                             <Form.Select
                                 className="d-inline-block mb-3 w-auto"
@@ -95,18 +96,19 @@ export default function ContentManagement({ product: initialProduct }: ProductPr
                                 ))}
                             </Form.Select>
                         </div>
-                        <Account />
+                        {activeKey === 'account' && <Account />}
+                      
                     </Tab>
 
                     <Tab eventKey="reporting" title={<>Cross-Site Historical Reporting</>}>
-                        <CrossSiteHistoricalReportingContent />
+                    {activeKey === 'reporting' && <CrossSiteHistoricalReportingContent />}                       
                     </Tab>
 
                     <Tab eventKey="sku" title={<>Set Up SKU / Auto Pull Management</>}>
-                        <SkuAutoPullSetup />
+                    {activeKey === 'sku' && <SkuAutoPullSetup />}                      
                     </Tab>
 
-                    <Tab className="position-relative" eventKey="bulk-upload" title={<>Bulk Target Product Upload</>}>
+                    <Tab className="position-relative" eventKey="bulkupload" title={<>Bulk Target Product Upload</>}>
                         <div className="videotargetProduct position-absolute end-0">
                             <Dropdown className="btn border-0 ps-1">
                                 <Dropdown.Toggle variant="success" className="badge border-0 bg-white" id="dropdown-basic">
@@ -123,7 +125,8 @@ export default function ContentManagement({ product: initialProduct }: ProductPr
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
-                        <BulkProductUpload />
+                        {activeKey === 'bulkupload' && <BulkProductUpload />}     
+                        
                     </Tab>
                 </Tabs>
             </Container>
