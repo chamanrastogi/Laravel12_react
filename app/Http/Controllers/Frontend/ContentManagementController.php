@@ -21,29 +21,28 @@ class ContentManagementController extends Controller
     }
 
 
-
     public function ajaxProducts(Request $request)
     {
         $query = AmericanBathGroupProductFound::select([
             'id',
+            'website_id',
             'product_sku',
             'website_sku',
+            'brand',
             'product_name',
             'created as original_date_found',
             'price',
             'mark_down_price as previous_price',
-            'inventory as stock_status',
+            'high_res_images as high_res_image_count',
             'images as image_count',
-            'videos as video_count',
-            'bullet as bullet_points',
-            'attribute',
+            'videos as video_count',            
+            'reviews as review_rating',
             'rating as avg_review_rating',
-            'reviews as review_count',
-            'prime',
-            'romance_copy',
-            'modified as last_updated',
+            'in_stock',
+            'prime',         
+           
         ]);
-
+        $query->where('website_id', 4);
         // Sorting
         if ($request->filled('sortField') && $request->filled('sortOrder')) {
             $sortOrder = $request->sortOrder == 1 ? 'asc' : 'desc';
@@ -57,7 +56,7 @@ class ContentManagementController extends Controller
             foreach ($filters as $field => $filter) {
                 $value = Arr::get($filter, 'value');
                 $matchMode = Arr::get($filter, 'matchMode', 'contains');
-
+                
                 if ($value !== null && $value !== '') {
                     switch ($matchMode) {
                         case 'contains':
@@ -100,11 +99,14 @@ class ContentManagementController extends Controller
         }
 
         // Get rows per page from request or default to 10
-        $perPage = $request->filled('rows') ? $request->rows : 10;
-
+        $perPage = $request->filled('rows') ? $request->rows : 100;
+        
         // Paginate results
-        $paginatedResults = $query->paginate($perPage);
-
+        $paginatedResults = $query->with([
+            'website_category:product_tracker_website_id,website_category_name',
+                       
+        ])->paginate($perPage);
+        
         return response()->json([
             'data' => $paginatedResults->items(),
             'total' => $paginatedResults->total(),
@@ -127,6 +129,9 @@ class ContentManagementController extends Controller
             $filename = $website_id . "_" . $user_id . "_" . $api_name . ".json";
             $url = "http://169.44.165.21/CMAPI/DataController.php?user_id=1178&website_id=4&api_name=price_data_tab&filters=[]";
 
+            if (Storage::exists($filename) && $request->active=="true") {
+                Storage::delete($filename);
+            }
             // If file doesn't exist, fetch and store it
             if (!Storage::exists($filename)) {
                 $response = Http::timeout(100)
@@ -142,16 +147,16 @@ class ContentManagementController extends Controller
                 Log::info("File generated: " . $filename);
             }
 
-            // Load data from file
+            // Load data from file     
             if (Storage::exists($filename)) {
                 $fileContents = Storage::get($filename);
                 $todos = json_decode($fileContents, true);
-
+                
                 // Get pagination and search parameters
                 $page = $request->input('page', 1);
                 $perPage = $request->input('per_page', 10);
                 $searchTerm = $request->input('search', '');
-
+                
                 // Apply search filter if search term exists
                 if (!empty($searchTerm)) {
                     $todos = array_filter($todos, function($item) use ($searchTerm) {
@@ -163,12 +168,12 @@ class ContentManagementController extends Controller
                         );
                     });
                 }
-
+                
                 // Calculate pagination
                 $total = count($todos);
                 $offset = ($page - 1) * $perPage;
                 $paginatedData = array_slice($todos, $offset, $perPage);
-
+                
                 return response()->json([
                     'data' => $paginatedData,
                     'total' => $total,
@@ -192,7 +197,7 @@ class ContentManagementController extends Controller
 
     public function ajaxOverviewDataTab(Request $request)
     {
-        Log::info("Function " ,['request' => $request->all()]);
+       
         try {
             set_time_limit(120);
             ini_set('memory_limit', '1024M');
@@ -212,13 +217,9 @@ class ContentManagementController extends Controller
                     'seller'       => ['$nin' => ['Seller_not_captured', '']],
                 ]),
             ];
-
-            $visited = $request->visited;
-            if(Storage::exists($filename) && $visited)
-            {
-                Log::info("File Deleted: " . $filename );
+            if (Storage::exists($filename) && $request->active=="true") {
+                Storage::delete($filename);
             }
-
             // If file doesn't exist or is older than 1 hour, fetch and store it
             if (!Storage::exists($filename) || (time() - Storage::lastModified($filename)) > 3600) {
                 $response = Http::timeout(100)
@@ -234,16 +235,16 @@ class ContentManagementController extends Controller
                 Log::info("File generated: " . $filename);
             }
 
-            // Load data from file
+            // Load data from file     
             if (Storage::exists($filename)) {
                 $fileContents = Storage::get($filename);
                 $todos = json_decode($fileContents, true);
-
+                
                 // Get pagination and search parameters
                 $page = $request->input('page', 1);
                 $perPage = $request->input('per_page', 10);
                 $searchTerm = $request->input('search', '');
-
+                
                 // Apply search filter if search term exists
                 if (!empty($searchTerm)) {
                     $todos = array_filter($todos, function($item) use ($searchTerm) {
@@ -255,12 +256,12 @@ class ContentManagementController extends Controller
                         );
                     });
                 }
-
+                
                 // Calculate pagination
                 $total = count($todos);
                 $offset = ($page - 1) * $perPage;
                 $paginatedData = array_slice($todos, $offset, $perPage);
-
+                
                 return response()->json([
                     'data' => $paginatedData,
                     'total' => $total,
@@ -269,8 +270,7 @@ class ContentManagementController extends Controller
                     'last_page' => ceil($total / $perPage),
                     'from' => $offset + 1,
                     'to' => min($offset + $perPage, $total),
-                    'total_records' => $total,
-                    'visit' => $visited
+                    'total_records' => $total
                 ]);
             } else {
                 return response()->json(['error' => 'File not found.'], 404);

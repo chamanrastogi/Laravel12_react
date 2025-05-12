@@ -4,6 +4,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Frontend\ContentManagementController;
+use App\Models\AmericanBathGroupProductFound;
 use Inertia\Inertia;
 
 Route::get('/userlogin', [HomeController::class, 'login'])->name('login');
@@ -20,7 +21,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('ajaxProducts', [ContentManagementController::class, 'ajaxProducts'])->name('content.management.products');
     Route::get('ajaxProductsMargin', [ContentManagementController::class, 'ajaxProductsMargin'])->name('content.management.ajaxProductsMargin');
     Route::get('ajaxOverviewDataTab', [ContentManagementController::class, 'ajaxOverviewDataTab'])->name('content.management.ajaxOverviewDataTab');
-
+    Route::get('/test', function () {
+       $user =AmericanBathGroupProductFound::with(['avg_ranks'])->where('website_sku','b00tyszsdi')->get();
+       dd($user);
+    })->name('test');
 
 });
 

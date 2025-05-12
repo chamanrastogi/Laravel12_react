@@ -19,10 +19,12 @@ import SaleImprovement from './sale-improvement/saleImprovement';
 import ShippingHistory from './shipping-history/ShippingHistory';
 import StockHistory from './stock-history/stockHistory';
 
-const CustomNavTabs = () => {
+const Account = () => {
     const [activeKey, setActiveKey] = useState('salesImprovement');
-
+    
     return (
+        <>
+        
         <Tab.Container activeKey={activeKey} onSelect={(k) => k && setActiveKey(k)}>
             <Nav variant="tabs" className="mb-1">
                 <Nav.Item>
@@ -41,19 +43,17 @@ const CustomNavTabs = () => {
                 <Dropdown as={Nav.Item}>
                     <Dropdown.Toggle
                         as={Nav.Link}
-                        className={
-                            activeKey === 'productData' ||
+                        className={activeKey === 'productData' ||
                             activeKey === 'contentHistory' ||
                             activeKey === 'imageCheck' ||
                             activeKey === 'unmatchedProducts'
-                                ? 'active'
-                                : ''
-                        }
+                            ? 'active'
+                            : ''}
                     >
                         Product Data
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => setActiveKey('productData')}>Product Data</Dropdown.Item>
+                        <Dropdown.Item  onClick={() => setActiveKey('productData')}>Product Data</Dropdown.Item>
                         <Dropdown.Item onClick={() => setActiveKey('contentHistory')}>Content History</Dropdown.Item>
                         <Dropdown.Item onClick={() => setActiveKey('imageCheck')}>Image Check</Dropdown.Item>
                         <Dropdown.Item onClick={() => setActiveKey('unmatchedProducts')}>Unmatched Products</Dropdown.Item>
@@ -87,11 +87,9 @@ const CustomNavTabs = () => {
                 <Dropdown as={Nav.Item}>
                     <Dropdown.Toggle
                         as={Nav.Link}
-                        className={
-                            activeKey === 'ranking' || activeKey === 'dashboard' || activeKey === 'weeklyRank' || activeKey === 'monthlyRank'
-                                ? 'active'
-                                : ''
-                        }
+                        className={activeKey === 'ranking' || activeKey === 'dashboard' || activeKey === 'weeklyRank' || activeKey === 'monthlyRank'
+                            ? 'active'
+                            : ''}
                     >
                         Ranking
                     </Dropdown.Toggle>
@@ -108,7 +106,7 @@ const CustomNavTabs = () => {
                 <Tab.Pane eventKey="notification">{activeKey === 'notification' && <Notifications />}</Tab.Pane>
                 <Tab.Pane eventKey="salesImprovement">{activeKey === 'salesImprovement' && <SaleImprovement />}</Tab.Pane>
                 <Tab.Pane eventKey="reviewRatingData">{activeKey === 'reviewRatingData' && <ReviewRatingDate />}</Tab.Pane>
-                <Tab.Pane eventKey="productData">{activeKey === 'productData' && <ProductData />}</Tab.Pane>
+                <Tab.Pane eventKey="productData">{activeKey === 'productData' && <ProductData   />}</Tab.Pane>
                 <Tab.Pane eventKey="contentHistory">{activeKey === 'contentHistory' && <ContentHistory />}</Tab.Pane>
                 <Tab.Pane eventKey="imageCheck">{activeKey === 'imageCheck' && <ImageCheck />}</Tab.Pane>
                 <Tab.Pane eventKey="unmatchedProducts">{activeKey === 'unmatchedProducts' && <UncheckProducts />}</Tab.Pane>
@@ -116,15 +114,15 @@ const CustomNavTabs = () => {
                 <Tab.Pane eventKey="fixMyContent">{activeKey === 'fixMyContent' && <FixMyContent />}</Tab.Pane>
                 <Tab.Pane eventKey="buyBox">{activeKey === 'buyBox' && <BuyBox />}</Tab.Pane>
                 <Tab.Pane eventKey="stockHistory">{activeKey === 'stockHistory' && <StockHistory />}</Tab.Pane>
-                <Tab.Pane eventKey="priceMargin">{activeKey === 'priceMargin' && <PriceMargin active="priceMargin" />}</Tab.Pane>
+                <Tab.Pane eventKey="priceMargin">{activeKey === 'priceMargin' && <PriceMargin  />}</Tab.Pane>
                 <Tab.Pane eventKey="shippingHistory">{activeKey === 'shippingHistory' && <ShippingHistory />}</Tab.Pane>
                 <Tab.Pane eventKey="ranking">{activeKey === 'ranking' && <Ranking />}</Tab.Pane>
                 <Tab.Pane eventKey="dashboard">{activeKey === 'dashboard' && <DashboradContent />}</Tab.Pane>
                 <Tab.Pane eventKey="weeklyRank">{activeKey === 'weeklyRank' && <AvgWeeklyRank />}</Tab.Pane>
                 <Tab.Pane eventKey="monthlyRank">{activeKey === 'monthlyRank' && <AvgMonthlyRank />}</Tab.Pane>
             </Tab.Content>
-        </Tab.Container>
+        </Tab.Container></>
     );
 };
 
-export default CustomNavTabs;
+export default Account;

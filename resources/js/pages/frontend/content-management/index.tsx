@@ -46,7 +46,7 @@ const videoLinks = [
 ];
 const renderTooltip = (message: string) => <Tooltip id="button-tooltip">{message}</Tooltip>;
 export default function ContentManagement({ product: initialProduct }: ProductProps) {
-    const [selectedProduct, setSelectedProduct] = useState<string>(initialProduct || 'all');
+    const [selectedWebsiteId, setSelectedWebsiteId] = useState<string>(initialProduct || '4');
     const [activeKey, setActiveKey] = useState<string>('dashboard'); // active tab state
     return (
         <AppFrontLayout>
@@ -86,17 +86,17 @@ export default function ContentManagement({ product: initialProduct }: ProductPr
                             <Form.Select
                                 className="d-inline-block mb-3 w-auto"
                                 size='sm'
-                                value={selectedProduct}
-                                onChange={(e) => setSelectedProduct(e.target.value)}
+                                value={selectedWebsiteId}
+                                onChange={(e) => setSelectedWebsiteId(e.target.value)}
                             >
                                 {websites.map((website, index) => (
-                                    <option key={index} value="all">
+                                    <option key={index} value={website.id}>
                                         {website.name}
                                     </option>
                                 ))}
                             </Form.Select>
                         </div>
-                        {activeKey === 'account' && <Account />}
+                        {activeKey === 'account' && <Account websiteid={selectedWebsiteId} />}
                       
                     </Tab>
 

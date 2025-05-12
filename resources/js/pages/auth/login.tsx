@@ -5,7 +5,7 @@ import { FormEventHandler } from 'react';
 import { Alert, Button, Col, Container, Form, FormControl, InputGroup, Row } from 'react-bootstrap';
 
 type LoginForm = {
-    email: string;
+    username: string;
     password: string;
     remember: boolean;
 };
@@ -17,7 +17,7 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps> = ({ status }) => {
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
-        email: '',
+        username: '',
         password: '',
         remember: false,
     });
@@ -39,25 +39,25 @@ const Login: React.FC<LoginProps> = ({ status }) => {
                         <Col md={6} className="login-main mx-auto">
                             <div className="mb-4 text-center">
                                 <h2>Sign in to account</h2>
-                                <p className="text-muted">Enter your email & password to login</p>
+                                <p className="text-muted">Enter your Username & password to login</p>
                             </div>
 
                             {status && <Alert variant="success">{status}</Alert>}
 
                             <Form onSubmit={handleSubmit}>
-                                <Form.Group className="mb-3" controlId="email">
-                                    <Form.Label>Email address</Form.Label>
+                                <Form.Group className="mb-3" controlId="username">
+                                    <Form.Label>Username</Form.Label>
                                     <InputGroup>
                                         <FormControl
-                                            type="email"
-                                            placeholder="email@example.com"
+                                            type="text"
+                                            placeholder="Username"
                                             required
-                                            name="email"
-                                            value={data.email}
-                                            onChange={(e) => setData('email', e.target.value)}
+                                            name="username"
+                                            value={data.username}
+                                            onChange={(e) => setData('username', e.target.value)}
                                         />
                                     </InputGroup>
-                                    {errors.email && <small className="text-danger">{errors.email}</small>}
+                                    {errors.username && <small className="text-danger">{errors.username}</small>}
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="password">

@@ -2,8 +2,8 @@ import { Image } from 'primereact/image';
 import { useState } from 'react';
 import { Button, Form, Tab, Tabs } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
-import ProductContent from './ProductContent';
-import ProductNumbers from './ProductNumbers';
+import ProductContent from './productContent';
+import ProductNumbers from './productNumbers';
 
 
 const videoLinks = [{ title: '9.0 - Content Management Dashboard', src: '#' }];
