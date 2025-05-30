@@ -3,12 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-
-
-use Illuminate\Http\Request;
 use Inertia\Inertia;
-
-
 
 class HomeController extends Controller
 {
@@ -17,6 +12,7 @@ class HomeController extends Controller
     {
         return Inertia::render('frontend/home/Index');
     }
+
     public function login()
     {
         return Inertia::render('frontend/login/index');

@@ -18,13 +18,15 @@ import ReviewRatingDate from './review-rating-data/reviewRatingDate';
 import SaleImprovement from './sale-improvement/saleImprovement';
 import ShippingHistory from './shipping-history/ShippingHistory';
 import StockHistory from './stock-history/stockHistory';
+import { AccountProps } from '@/types/accounts';
 
-const Account = () => {
+
+const Account = ({ webId }: AccountProps) => {
     const [activeKey, setActiveKey] = useState('salesImprovement');
     
     return (
         <>
-        
+      
         <Tab.Container activeKey={activeKey} onSelect={(k) => k && setActiveKey(k)}>
             <Nav variant="tabs" className="mb-1">
                 <Nav.Item>
@@ -106,7 +108,7 @@ const Account = () => {
                 <Tab.Pane eventKey="notification">{activeKey === 'notification' && <Notifications />}</Tab.Pane>
                 <Tab.Pane eventKey="salesImprovement">{activeKey === 'salesImprovement' && <SaleImprovement />}</Tab.Pane>
                 <Tab.Pane eventKey="reviewRatingData">{activeKey === 'reviewRatingData' && <ReviewRatingDate />}</Tab.Pane>
-                <Tab.Pane eventKey="productData">{activeKey === 'productData' && <ProductData   />}</Tab.Pane>
+                <Tab.Pane eventKey="productData">{activeKey === 'productData' && <ProductData webId={webId}  />}</Tab.Pane>
                 <Tab.Pane eventKey="contentHistory">{activeKey === 'contentHistory' && <ContentHistory />}</Tab.Pane>
                 <Tab.Pane eventKey="imageCheck">{activeKey === 'imageCheck' && <ImageCheck />}</Tab.Pane>
                 <Tab.Pane eventKey="unmatchedProducts">{activeKey === 'unmatchedProducts' && <UncheckProducts />}</Tab.Pane>

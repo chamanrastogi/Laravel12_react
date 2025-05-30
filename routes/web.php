@@ -1,16 +1,14 @@
 <?php
 
-use App\Http\Controllers\Frontend\HomeController;
-use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\Frontend\ContentManagementController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Models\AmericanBathGroupProductFound;
+use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/userlogin', [HomeController::class, 'login'])->name('login');
 
-Route::fallback(fn() => Inertia::render('NotFound'));
-
+Route::fallback(fn () => Inertia::render('NotFound'));
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [ContentManagementController::class, 'index'])->name('home');
@@ -22,10 +20,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('ajaxProductsMargin', [ContentManagementController::class, 'ajaxProductsMargin'])->name('content.management.ajaxProductsMargin');
     Route::get('ajaxOverviewDataTab', [ContentManagementController::class, 'ajaxOverviewDataTab'])->name('content.management.ajaxOverviewDataTab');
     Route::get('/test', function () {
-       $user =AmericanBathGroupProductFound::with(['avg_ranks'])->where('website_sku','b00tyszsdi')->get();
-       dd($user);
-    })->name('test');
+        $product = AmericanBathGroupProductFound::whereHas('avg_ranks')->where('website_sku', '1000666763')->first();
+        if ($product) {
+            // dd($product?->avg_ranks[0]->categoryinfo);
+            dd($product?->avg_ranks->categoryinfo->website_category_name);
+        }
 
+    })->name('test');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

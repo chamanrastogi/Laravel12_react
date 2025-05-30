@@ -35,15 +35,22 @@ class ContentManagementController extends Controller
             'mark_down_price as previous_price',
             'high_res_images as high_res_image_count',
             'images as image_count',
-            'videos as video_count',            
+            'videos as video_count',
             'reviews as review_rating',
             'rating as avg_review_rating',
             'in_stock',
-            'prime',         
-           
+            'prime',
         ]);
-        $query->where('website_id', 4);
+        $query->where('website_id', $request->websiteId);
         // Sorting
+        if ($request->filled('in_stock')) {
+            if ($request->in_stock == 3 || $request->in_stock == '') {
+               
+            }else
+            {
+                 $query->where('in_stock', $request->in_stock); 
+            }
+        }
         if ($request->filled('sortField') && $request->filled('sortOrder')) {
             $sortOrder = $request->sortOrder == 1 ? 'asc' : 'desc';
             $query->orderBy($request->sortField, $sortOrder);
@@ -56,7 +63,7 @@ class ContentManagementController extends Controller
             foreach ($filters as $field => $filter) {
                 $value = Arr::get($filter, 'value');
                 $matchMode = Arr::get($filter, 'matchMode', 'contains');
-                
+
                 if ($value !== null && $value !== '') {
                     switch ($matchMode) {
                         case 'contains':
@@ -91,22 +98,23 @@ class ContentManagementController extends Controller
         // Search
         if ($request->filled('search')) {
             $searchTerm = $request->search;
-            $query->where(function($q) use ($searchTerm) {
+            $query->where(function ($q) use ($searchTerm) {
                 $q->where('product_name', 'LIKE', "%$searchTerm%")
-                  ->orWhere('product_sku', 'LIKE', "%$searchTerm%")
-                  ->orWhere('website_sku', 'LIKE', "%$searchTerm%");
+                    ->orWhere('product_sku', 'LIKE', "%$searchTerm%")
+                    ->orWhere('website_sku', 'LIKE', "%$searchTerm%");
             });
         }
 
         // Get rows per page from request or default to 10
         $perPage = $request->filled('rows') ? $request->rows : 100;
-        
+
         // Paginate results
         $paginatedResults = $query->with([
             'website_category:product_tracker_website_id,website_category_name',
-                       
+            'avg_ranks'
+
         ])->paginate($perPage);
-        
+
         return response()->json([
             'data' => $paginatedResults->items(),
             'total' => $paginatedResults->total(),
@@ -129,7 +137,7 @@ class ContentManagementController extends Controller
             $filename = $website_id . "_" . $user_id . "_" . $api_name . ".json";
             $url = "http://169.44.165.21/CMAPI/DataController.php?user_id=1178&website_id=4&api_name=price_data_tab&filters=[]";
 
-            if (Storage::exists($filename) && $request->active=="true") {
+            if (Storage::exists($filename) && $request->active == "true") {
                 Storage::delete($filename);
             }
             // If file doesn't exist, fetch and store it
@@ -151,15 +159,15 @@ class ContentManagementController extends Controller
             if (Storage::exists($filename)) {
                 $fileContents = Storage::get($filename);
                 $todos = json_decode($fileContents, true);
-                
+
                 // Get pagination and search parameters
                 $page = $request->input('page', 1);
                 $perPage = $request->input('per_page', 10);
                 $searchTerm = $request->input('search', '');
-                
+
                 // Apply search filter if search term exists
                 if (!empty($searchTerm)) {
-                    $todos = array_filter($todos, function($item) use ($searchTerm) {
+                    $todos = array_filter($todos, function ($item) use ($searchTerm) {
                         $searchLower = strtolower($searchTerm);
                         return (
                             str_contains(strtolower($item['product_sku'] ?? ''), $searchLower) ||
@@ -168,12 +176,12 @@ class ContentManagementController extends Controller
                         );
                     });
                 }
-                
+
                 // Calculate pagination
                 $total = count($todos);
                 $offset = ($page - 1) * $perPage;
                 $paginatedData = array_slice($todos, $offset, $perPage);
-                
+
                 return response()->json([
                     'data' => $paginatedData,
                     'total' => $total,
@@ -197,7 +205,7 @@ class ContentManagementController extends Controller
 
     public function ajaxOverviewDataTab(Request $request)
     {
-       
+
         try {
             set_time_limit(120);
             ini_set('memory_limit', '1024M');
@@ -217,7 +225,7 @@ class ContentManagementController extends Controller
                     'seller'       => ['$nin' => ['Seller_not_captured', '']],
                 ]),
             ];
-            if (Storage::exists($filename) && $request->active=="true") {
+            if (Storage::exists($filename) && $request->active == "true") {
                 Storage::delete($filename);
             }
             // If file doesn't exist or is older than 1 hour, fetch and store it
@@ -239,15 +247,15 @@ class ContentManagementController extends Controller
             if (Storage::exists($filename)) {
                 $fileContents = Storage::get($filename);
                 $todos = json_decode($fileContents, true);
-                
+
                 // Get pagination and search parameters
                 $page = $request->input('page', 1);
                 $perPage = $request->input('per_page', 10);
                 $searchTerm = $request->input('search', '');
-                
+
                 // Apply search filter if search term exists
                 if (!empty($searchTerm)) {
-                    $todos = array_filter($todos, function($item) use ($searchTerm) {
+                    $todos = array_filter($todos, function ($item) use ($searchTerm) {
                         $searchLower = strtolower($searchTerm);
                         return (
                             str_contains(strtolower($item['product_sku'] ?? ''), $searchLower) ||
@@ -256,12 +264,12 @@ class ContentManagementController extends Controller
                         );
                     });
                 }
-                
+
                 // Calculate pagination
                 $total = count($todos);
                 $offset = ($page - 1) * $perPage;
                 $paginatedData = array_slice($todos, $offset, $perPage);
-                
+
                 return response()->json([
                     'data' => $paginatedData,
                     'total' => $total,

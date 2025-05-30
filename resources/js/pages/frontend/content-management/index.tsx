@@ -76,7 +76,7 @@ export default function ContentManagement({ product: initialProduct }: ProductPr
 
                 {/* Tabs Navigation */}
                 <Tabs activeKey={activeKey}
-                    onSelect={(k) => k && setActiveKey(k)} id="contentTabs" className="mb-1" variant="pills">
+                    onSelect={(k) => k && setActiveKey(k)} id="contentTabs" className="pb-1" variant="pills">
                     <Tab className="position-relative" eventKey="dashboard" title={<>Content Management Dashboard</>}>                        
                         {activeKey === 'dashboard' && <ContentManagementDashboard />}
                     </Tab>
@@ -96,7 +96,7 @@ export default function ContentManagement({ product: initialProduct }: ProductPr
                                 ))}
                             </Form.Select>
                         </div>
-                        {activeKey === 'account' && <Account websiteid={selectedWebsiteId} />}
+                        {activeKey === 'account' && <Account webId={selectedWebsiteId} />}
                       
                     </Tab>
 

@@ -18,9 +18,9 @@ class EmployeeFactory extends Factory
     {
         return [
             'name' => fake()->name,
-                'email' => fake()->unique()->safeEmail,
-                'position' => fake()->jobTitle,
-                'salary' => fake()->randomFloat(2, 30000, 100000),
+            'email' => fake()->unique()->safeEmail,
+            'position' => fake()->jobTitle,
+            'salary' => fake()->randomFloat(2, 30000, 100000),
         ];
     }
 }

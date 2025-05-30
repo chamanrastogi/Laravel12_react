@@ -34,11 +34,12 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
         $notification = [
             'status' => 'success', // Can be 'error' or 'success'
-            'message' => 'Welcome back, ' . Auth::user()->name . '!',
+            'message' => 'Welcome back, '.Auth::user()->name.'!',
         ];
+
         return redirect()->intended(route('content.management', absolute: false))->with('notification', $notification);
     }
-    
+
     /**
      * Destroy an authenticated session.
      */

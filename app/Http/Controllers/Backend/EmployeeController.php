@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -35,25 +34,27 @@ class EmployeeController extends Controller
 
         return Inertia::render('backend/employees/index', [
             'employees' => $employees,
-            'filters' => $request->only(['search', 'sortField', 'sortOrder'])
+            'filters' => $request->only(['search', 'sortField', 'sortOrder']),
         ]);
     }
+
     public function ajaxPage()
     {
         return Inertia::render('backend/employees/ajaxindex');
     }
+
     public function ajaxIndex(Request $request)
     {
         $query = Employee::query();
 
         // Search filter
-        if ($request->has('search') && !empty($request->search)) {
-            $query->where('name', 'like', '%' . $request->search . '%')
-                ->orWhere('email', 'like', '%' . $request->search . '%');
+        if ($request->has('search') && ! empty($request->search)) {
+            $query->where('name', 'like', '%'.$request->search.'%')
+                ->orWhere('email', 'like', '%'.$request->search.'%');
         }
 
         // Sorting (Only apply if sortField is valid)
-        if ($request->has('sortField') && !empty($request->sortField)) {
+        if ($request->has('sortField') && ! empty($request->sortField)) {
             $sortOrder = $request->sortOrder === 'desc' ? 'desc' : 'asc';
 
             // Prevent SQL injection by ensuring sortField is a valid column
@@ -71,6 +72,7 @@ class EmployeeController extends Controller
 
         return response()->json($employees);
     }
+
     public function table(Request $request)
     {
 
@@ -92,9 +94,10 @@ class EmployeeController extends Controller
 
         return Inertia::render('table', [
             'employees' => $employees,
-            'filters' => $request->only(['search', 'sortField', 'sortOrder'])
+            'filters' => $request->only(['search', 'sortField', 'sortOrder']),
         ]);
     }
+
     /**
      * Show the form for creating a new resource.
      */

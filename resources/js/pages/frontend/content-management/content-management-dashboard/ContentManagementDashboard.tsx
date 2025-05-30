@@ -23,7 +23,7 @@ export default function ContentManagementDashboard() {
                 </Form.Select>
             </div>
             <div className="position-absolute playpos">
-                <Dropdown className="btn align-self  border-0 ps-1">
+                <Dropdown className="btn align-self  border-0 ps-4">
                     <Dropdown.Toggle variant="success" className="badge border-0 bg-white p-0" id="dropdown-basic">
                         <Image src="./images/icons/play.png" className="fa" width="34" />
                     </Dropdown.Toggle>
@@ -38,7 +38,7 @@ export default function ContentManagementDashboard() {
                     </Dropdown.Menu>
                 </Dropdown>
             </div>
-            <Tabs activeKey={activeKey} onSelect={(k) => k && setActiveKey(k)} id="uncontrolled-tab-example" className="border-bottom border-top py-1" variant="pills">
+            <Tabs activeKey={activeKey} onSelect={(k) => k && setActiveKey(k)} id="uncontrolled-tab-example" className="border-bottom border-top " variant="pills">
                 <Tab eventKey="productnumber" title="Product Numbers">
                 {activeKey === 'productnumber' && <ProductNumbers product={selectedProduct} />}
                 </Tab>

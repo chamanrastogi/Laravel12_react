@@ -18,8 +18,8 @@ class StudentController extends Controller
         $query = Student::query();
 
         // Apply search
-        if ($request->has('search') && !empty($request->search)) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+        if ($request->has('search') && ! empty($request->search)) {
+            $query->where('name', 'like', '%'.$request->search.'%');
         }
 
         // Apply sorting
@@ -32,20 +32,21 @@ class StudentController extends Controller
         // Paginate results
         $students = $query->paginate(10)->appends($request->query());
 
-
         return Inertia::render('backend/student/index', [
             'students' => $students,
-            'filters' => ['search' => $request->search]
+            'filters' => ['search' => $request->search],
         ]);
     }
+
     public function students()
     {
         $students = Student::all(); // Keeps search/filter params in URL
 
         return Inertia::render('backend/student/students', [
-            'students' => $students
+            'students' => $students,
         ]);
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -61,15 +62,15 @@ class StudentController extends Controller
     {
         //
         $validatedData = $request->validate([
-            'name'  => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:students,email',
-            'age'   => 'required|integer|min:1',
+            'age' => 'required|integer|min:1',
         ]);
 
         // Create new student
         $student = Student::create($validatedData);
 
-        // Return a JSON response (for API) or redirect (for web)       
+        // Return a JSON response (for API) or redirect (for web)
         return redirect()->route('student.create')->with('Student created successfully!');
     }
 
@@ -95,11 +96,10 @@ class StudentController extends Controller
     public function update(Request $request, Student $student)
     {
         $validatedData = $request->validate([
-            'name'  => 'required|string|max:255',
-            'email' => 'required|email|unique:students,email,' . $student->id,
-            'age'   => 'required|integer|min:1',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:students,email,'.$student->id,
+            'age' => 'required|integer|min:1',
         ]);
-
 
         // Create new student
         $student->fill($validatedData);
@@ -109,7 +109,7 @@ class StudentController extends Controller
             'message' => 'Student successfully updated!',
         ];
 
-        // Return a JSON response (for API) or redirect (for web)       
+        // Return a JSON response (for API) or redirect (for web)
         return redirect()->route('student.edit', $student->id)->with('notification', $notification);
     }
 
@@ -123,6 +123,7 @@ class StudentController extends Controller
             'status' => 'success', // Can be 'error' or 'success'
             'message' => 'Student successfully deleted!',
         ];
+
         return redirect()->route('student.index')->with('notification', $notification);
     }
 }

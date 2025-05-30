@@ -16,7 +16,7 @@ export default function NavBar() {
             {/* Top Navbar */}
             <div className="fixed-top">
                 <Navbar bg="light" variant="light" className="px-0 py-2 shadow-sm">
-                    <Container className="d-flex justify-content-between">
+                    <Container fluid className="d-flex justify-content-between px-3">
                         {/* Logo */}
                         <span className="d-flex flex" id="logo">
                             <Link href="/">
@@ -48,8 +48,8 @@ export default function NavBar() {
                 </Navbar>
 
                 {/* Main Navigation */}
-                <Navbar bg="primary" className="p-0" variant="dark" expand="lg">
-                    <Container>
+                <Navbar  className="p-0" id="mainmenu" variant="dark" expand="lg">
+                    <Container fluid>
                         <Navbar.Toggle aria-controls="navbarNavDropdown" />
                         <Navbar.Collapse id="navbarNavDropdown">
                             <Nav className="me-auto">
