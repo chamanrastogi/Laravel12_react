@@ -23,6 +23,7 @@ class ContentManagementController extends Controller
 
     public function ajaxProducts(Request $request)
     {
+
         $query = AmericanBathGroupProductFound::select([
             'id',
             'website_id',
@@ -45,12 +46,15 @@ class ContentManagementController extends Controller
         // Sorting
         if ($request->filled('in_stock')) {
             if ($request->in_stock == 3 || $request->in_stock == '') {
-               
+
             }else
             {
-                 $query->where('in_stock', $request->in_stock); 
+                 $query->where('in_stock', $request->in_stock);
             }
         }
+
+
+
         if ($request->filled('sortField') && $request->filled('sortOrder')) {
             $sortOrder = $request->sortOrder == 1 ? 'asc' : 'desc';
             $query->orderBy($request->sortField, $sortOrder);
@@ -155,7 +159,7 @@ class ContentManagementController extends Controller
                 Log::info("File generated: " . $filename);
             }
 
-            // Load data from file     
+            // Load data from file
             if (Storage::exists($filename)) {
                 $fileContents = Storage::get($filename);
                 $todos = json_decode($fileContents, true);
@@ -243,7 +247,7 @@ class ContentManagementController extends Controller
                 Log::info("File generated: " . $filename);
             }
 
-            // Load data from file     
+            // Load data from file
             if (Storage::exists($filename)) {
                 $fileContents = Storage::get($filename);
                 $todos = json_decode($fileContents, true);

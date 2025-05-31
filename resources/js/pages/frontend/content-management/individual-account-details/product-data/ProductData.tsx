@@ -106,6 +106,11 @@ export default function ProductData({ webId }: AccountProps) {
 
     const [selectedCategory, setSelectedCategory] = useState([]);
 
+    // Add these to your component's state:
+    const [duplicate, setDuplicate] = useState(true); // defaultChecked
+    const [onlysellerdisplay, setOnlysellerdisplay] = useState(false);
+    const [noRankPrimeCategegory, setNoRankPrimeCategegory] = useState(false);
+
     const fetchProducts = useCallback(
         async (page = 1) => {
             setLoading(true);
@@ -115,9 +120,14 @@ export default function ProductData({ webId }: AccountProps) {
                         page,
                         sortField,
                         sortOrder,
-                        filters: JSON.stringify(filters),
+                        filters: JSON.stringify({
+                            ...filters,
+                            duplicate,
+                            onlysellerdisplay,
+                            noRankPrimeCategegory,
+                        }),
                         search: searchTerm,
-                        in_stock: inStock, // <-- already passed here
+                        in_stock: inStock,
                         websiteId: webId,
                     },
                 });
@@ -129,12 +139,12 @@ export default function ProductData({ webId }: AccountProps) {
                 setLoading(false);
             }
         },
-        [sortField, sortOrder, filters, searchTerm, webId, inStock], // <-- dependency
+        [sortField, sortOrder, filters, searchTerm, webId, inStock, duplicate, onlysellerdisplay, noRankPrimeCategegory],
     );
 
     useEffect(() => {
         fetchProducts(first / rows + 1);
-    }, [first, rows, fetchProducts, inStock]); // <-- add inStock here
+    }, [first, rows, fetchProducts, inStock, duplicate, onlysellerdisplay, noRankPrimeCategegory]);
     return (
         <div className="border p-3">
             <Row className="d-flex justify-content-center">
@@ -228,14 +238,34 @@ export default function ProductData({ webId }: AccountProps) {
                     </Form.Select>
                 </Col>
                 <Col md={2} className="mt-2">
-                    <Form.Check inline type="checkbox" name="changeFilter" label="Display SKUs with multiple PDP pages" defaultChecked />
+                    <Form.Check
+                        inline
+                        type="checkbox"
+                        name="duplicate"
+                        label="Display SKUs with multiple PDP pages"
+                        checked={duplicate}
+                        onChange={(e) => setDuplicate(e.target.checked)}
+                    />
                 </Col>
                 <Col md={3} className="mt-2">
-                    <Form.Check inline type="checkbox" name="changeFilter" label="Only display Sku that you control" />
+                    <Form.Check
+                        inline
+                        type="checkbox"
+                        name="onlysellerdisplay"
+                        label="Only display Sku that you control"
+                        checked={onlysellerdisplay}
+                        onChange={(e) => setOnlysellerdisplay(e.target.checked)}
+                    />
                 </Col>
                 <Col md={3} className="mt-2">
-                    {' '}
-                    <Form.Check inline type="checkbox" name="changeFilter" label="Display product that is not ranking in the Primary Category" />
+                    <Form.Check
+                        inline
+                        type="checkbox"
+                        name="noRankPrimeCategegory"
+                        label="Display product that is not ranking in the Primary Category"
+                        checked={noRankPrimeCategegory}
+                        onChange={(e) => setNoRankPrimeCategegory(e.target.checked)}
+                    />
                 </Col>
                 <Col md={2} className="text-end">
                     <Button size="sm" variant="primary" className="me-1 mt-1">
