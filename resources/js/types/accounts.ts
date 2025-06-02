@@ -1,3 +1,7 @@
 export interface AccountProps {
-     webId: number | string;  // or number, depending on your actual type
+    webId: string;
+    webName: string;
+    active_state:string;
+    target:string;
+    // ...other props
 }

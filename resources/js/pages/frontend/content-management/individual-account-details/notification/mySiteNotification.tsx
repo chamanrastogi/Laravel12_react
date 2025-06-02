@@ -105,7 +105,7 @@ export default function MySiteNotification() {
                                 <Button variant="primary" size="sm" className="smallfont me-2">
                                     VIEW
                                 </Button>
-                                <Button variant="primary" className="smallfont" size="sm">
+                                <Button variant="primary" className="common_btn smallfont" size="sm">
                                     DELETE
                                 </Button>
                             </td>

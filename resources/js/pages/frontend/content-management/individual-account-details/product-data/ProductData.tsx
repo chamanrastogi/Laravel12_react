@@ -87,7 +87,7 @@ const category = [
 ];
 
 const renderTooltip = (message: string) => <Tooltip id="button-tooltip">{message}</Tooltip>;
-export default function ProductData({ webId }: AccountProps) {
+export default function ProductData({ webId,webName,active_state,target }: AccountProps) {
     const [products, setProducts] = useState<Product[]>([]);
 
     const [loading, setLoading] = useState(true);
@@ -100,9 +100,9 @@ export default function ProductData({ webId }: AccountProps) {
     const [searchTerm, setSearchTerm] = useState('');
 
     const initialProduct = 'all'; // Define a default value for initialProduct
-    const initialStock = '3'; // Use string to match select option values
+    // Use string to match select option values
     const [selectedProduct, setSelectedProduct] = useState<string>(initialProduct);
-    const [inStock, setinStock] = useState<string>(initialStock);
+    const [inStock, setinStock] = useState<string>(active_state);
 
     const [selectedCategory, setSelectedCategory] = useState([]);
 
@@ -119,6 +119,7 @@ export default function ProductData({ webId }: AccountProps) {
                         search: searchTerm,
                         in_stock: inStock, // <-- already passed here
                         websiteId: webId,
+                        target:target
                     },
                 });
                 setProducts(res.data.data);
@@ -129,7 +130,7 @@ export default function ProductData({ webId }: AccountProps) {
                 setLoading(false);
             }
         },
-        [sortField, sortOrder, filters, searchTerm, webId, inStock], // <-- dependency
+        [sortField, sortOrder, filters, searchTerm, webId,target, inStock], // <-- dependency
     );
 
     useEffect(() => {
@@ -151,12 +152,12 @@ export default function ProductData({ webId }: AccountProps) {
                         <option value="wayfair">Wayfair</option>
                         <option value="lowes">Lowes</option>
                     </Form.Select>{' '}
-                    <Button size="sm" variant="primary" className="me-1">
+                    <Button size="sm" variant="primary" className="me-1 common_btn ">
                         FIX MY CONTENT
                     </Button>
                 </Col>
                 <Col className="col-4 text-end">
-                    <Button size="sm" variant="primary" className="me-1 mt-1">
+                    <Button size="sm" variant="primary" className="me-1 mt-1 common_btn">
                         API INSTRUCTIONS
                     </Button>
                 </Col>
@@ -164,7 +165,7 @@ export default function ProductData({ webId }: AccountProps) {
             <Row className="d-flex justify-content-between">
                 <Col md={12} className="mt-3">
                     <h2 className="pageheading">
-                        <Image src="./images/icons/shopping-bag.jpg" alt="Shoping Bag" /> Amazon Pricing Data{' '}
+                        <Image src="./images/icons/shopping-bag.jpg" alt="Shoping Bag" /> {webName} Unique Products{' '}
                         <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with 5+ publishedDate.')}>
                             <InfoIcon width={15} className="me-1" />
                         </OverlayTrigger>
@@ -192,8 +193,8 @@ export default function ProductData({ webId }: AccountProps) {
                 </Col>
             </Row>
             <Row className="d-flex">
-                <Col md={12}>
-                    <Form.Label className="h4 me-1">Comparison Selection </Form.Label>
+                <Col md={12} className='text-end'>
+                    <Form.Label className="lead me-1 text-normal">Comparison Selection </Form.Label>
                     <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with 5+ publishedDate.')}>
                         <InfoIcon width={15} className="me-1" />
                     </OverlayTrigger>
@@ -204,17 +205,17 @@ export default function ProductData({ webId }: AccountProps) {
                         options={category}
                         optionLabel="name"
                         filter
-                        placeholder="[Select]"
+                        placeholder="[All Selected]"
                         maxSelectedLabels={3}
-                        className="md:w-20rem me-3 w-25"
+                        className="md:w-20rem me-3 text-start multi_select px-0"
                     />
-                    <Button variant="primary" className="me-1">
+                    <Button variant="primary" className="common_btn me-1">
                         DOWNLOAD FILE
                     </Button>
-                    <Button variant="primary" className="me-1">
+                    <Button variant="primary" className="common_btn me-1">
                         Download Attribute & Bullet Point Analysis
                     </Button>
-                    <Button variant="primary" className="me-1">
+                    <Button variant="primary" className="common_btn me-1">
                         Products Not Ranking in Any Category
                     </Button>
                 </Col>
@@ -227,10 +228,10 @@ export default function ProductData({ webId }: AccountProps) {
                         <option value="3">Products - All</option>
                     </Form.Select>
                 </Col>
-                <Col md={2} className="mt-2">
+                <Col md={3} className="mt-2">
                     <Form.Check inline type="checkbox" name="changeFilter" label="Display SKUs with multiple PDP pages" defaultChecked />
                 </Col>
-                <Col md={3} className="mt-2">
+                <Col md={2} className="mt-2">
                     <Form.Check inline type="checkbox" name="changeFilter" label="Only display Sku that you control" />
                 </Col>
                 <Col md={3} className="mt-2">
@@ -238,7 +239,7 @@ export default function ProductData({ webId }: AccountProps) {
                     <Form.Check inline type="checkbox" name="changeFilter" label="Display product that is not ranking in the Primary Category" />
                 </Col>
                 <Col md={2} className="text-end">
-                    <Button size="sm" variant="primary" className="me-1 mt-1">
+                    <Button size="sm" variant="primary" className="me-1 mt-1 common_btn">
                         ADD SELECTED IMAGE & DATA
                     </Button>{' '}
                 </Col>

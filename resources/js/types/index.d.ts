@@ -12,25 +12,12 @@ export interface BreadcrumbItem {
     title: string;
     href: string;
 }
-export interface Student {
-    name: string;
-    email: string;
-    age: string;
-    [key: string]: string;
+interface ContentManagementProps {    
+    crawlersDisp: { [id: string]: string }; // Adjust type as needed
+    website_id: string | number;
+    active_state: string | number;
 }
 
-export interface StudentTable {
-    id: number;
-    name: string;
-    email: string;
-    age: string;
-}
-export interface Employee {
-    id: number;
-    name: string;
-    position: string;
-    salary: string;
-}
 export interface SellerTable {
     id: number;
     seller: string;

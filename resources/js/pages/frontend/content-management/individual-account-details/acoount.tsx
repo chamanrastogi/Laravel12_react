@@ -21,16 +21,16 @@ import StockHistory from './stock-history/stockHistory';
 import { AccountProps } from '@/types/accounts';
 
 
-const Account = ({ webId }: AccountProps) => {
+const Account = ({ webId, webName,active_state,target }: AccountProps) => {
     const [activeKey, setActiveKey] = useState('salesImprovement');
     
     return (
         <>
-      
+       
         <Tab.Container activeKey={activeKey} onSelect={(k) => k && setActiveKey(k)}>
             <Nav variant="tabs" className="mb-1">
                 <Nav.Item>
-                    <Nav.Link eventKey="notification">Notifications</Nav.Link>
+                    <Nav.Link eventKey="notification">Notifications </Nav.Link>
                 </Nav.Item>
 
                 <Nav.Item>
@@ -108,7 +108,7 @@ const Account = ({ webId }: AccountProps) => {
                 <Tab.Pane eventKey="notification">{activeKey === 'notification' && <Notifications />}</Tab.Pane>
                 <Tab.Pane eventKey="salesImprovement">{activeKey === 'salesImprovement' && <SaleImprovement />}</Tab.Pane>
                 <Tab.Pane eventKey="reviewRatingData">{activeKey === 'reviewRatingData' && <ReviewRatingDate />}</Tab.Pane>
-                <Tab.Pane eventKey="productData">{activeKey === 'productData' && <ProductData webId={webId}  />}</Tab.Pane>
+                <Tab.Pane eventKey="productData">{activeKey === 'productData' && <ProductData webId={webId} webName={webName} active_state={active_state} target={target} />}</Tab.Pane>
                 <Tab.Pane eventKey="contentHistory">{activeKey === 'contentHistory' && <ContentHistory />}</Tab.Pane>
                 <Tab.Pane eventKey="imageCheck">{activeKey === 'imageCheck' && <ImageCheck />}</Tab.Pane>
                 <Tab.Pane eventKey="unmatchedProducts">{activeKey === 'unmatchedProducts' && <UncheckProducts />}</Tab.Pane>
@@ -123,7 +123,8 @@ const Account = ({ webId }: AccountProps) => {
                 <Tab.Pane eventKey="weeklyRank">{activeKey === 'weeklyRank' && <AvgWeeklyRank />}</Tab.Pane>
                 <Tab.Pane eventKey="monthlyRank">{activeKey === 'monthlyRank' && <AvgMonthlyRank />}</Tab.Pane>
             </Tab.Content>
-        </Tab.Container></>
+        </Tab.Container>
+        </>
     );
 };
 
