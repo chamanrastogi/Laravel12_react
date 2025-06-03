@@ -106,6 +106,11 @@ export default function ProductData({ webId,webName,active_state,target }: Accou
 
     const [selectedCategory, setSelectedCategory] = useState([]);
 
+    // Add these to your component's state:
+    const [duplicate, setDuplicate] = useState(true); // defaultChecked
+    const [onlysellerdisplay, setOnlysellerdisplay] = useState(false);
+    const [noRankPrimeCategegory, setNoRankPrimeCategegory] = useState(false);
+
     const fetchProducts = useCallback(
         async (page = 1) => {
             setLoading(true);
@@ -115,9 +120,14 @@ export default function ProductData({ webId,webName,active_state,target }: Accou
                         page,
                         sortField,
                         sortOrder,
-                        filters: JSON.stringify(filters),
+                        filters: JSON.stringify({
+                            ...filters,
+                            duplicate,
+                            onlysellerdisplay,
+                            noRankPrimeCategegory,
+                        }),
                         search: searchTerm,
-                        in_stock: inStock, // <-- already passed here
+                        in_stock: inStock,
                         websiteId: webId,
                         target:target
                     },
@@ -130,12 +140,12 @@ export default function ProductData({ webId,webName,active_state,target }: Accou
                 setLoading(false);
             }
         },
-        [sortField, sortOrder, filters, searchTerm, webId,target, inStock], // <-- dependency
+        [sortField, sortOrder, filters, searchTerm, webId, inStock], // <-- dependency
     );
 
     useEffect(() => {
         fetchProducts(first / rows + 1);
-    }, [first, rows, fetchProducts, inStock]); // <-- add inStock here
+    }, [first, rows, fetchProducts, inStock, duplicate, onlysellerdisplay, noRankPrimeCategegory]);
     return (
         <div className="border p-3">
             <Row className="d-flex justify-content-center">
@@ -228,15 +238,21 @@ export default function ProductData({ webId,webName,active_state,target }: Accou
                         <option value="3">Products - All</option>
                     </Form.Select>
                 </Col>
-                <Col md={3} className="mt-2">
+                <Col md={2} className="mt-2">
                     <Form.Check inline type="checkbox" name="changeFilter" label="Display SKUs with multiple PDP pages" defaultChecked />
                 </Col>
-                <Col md={2} className="mt-2">
+                <Col md={3} className="mt-2">
                     <Form.Check inline type="checkbox" name="changeFilter" label="Only display Sku that you control" />
                 </Col>
                 <Col md={3} className="mt-2">
-                    {' '}
-                    <Form.Check inline type="checkbox" name="changeFilter" label="Display product that is not ranking in the Primary Category" />
+                    <Form.Check
+                        inline
+                        type="checkbox"
+                        name="noRankPrimeCategegory"
+                        label="Display product that is not ranking in the Primary Category"
+                        checked={noRankPrimeCategegory}
+                        onChange={(e) => setNoRankPrimeCategegory(e.target.checked)}
+                    />
                 </Col>
                 <Col md={2} className="text-end">
                     <Button size="sm" variant="primary" className="me-1 mt-1 common_btn">

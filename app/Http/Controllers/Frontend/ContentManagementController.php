@@ -269,27 +269,16 @@ class ContentManagementController extends Controller
         $query->where('website_id', $request->websiteId);
         // Sorting
         if ($request->filled('in_stock')) {
-            if ($request->in_stock == 0) {
-            } else {
-                $instock = $request->in_stock;
-                if ($instock == 'N') {
-                    $query->where('in_stock', '$instock')->where('break_status', 0);
-                } else {
-                    $query->whereIn('break_status', [2, 3]);
-                }
+            if ($request->in_stock == 3 || $request->in_stock == '') {
+               
+            }else
+            {
+                 $query->where('in_stock', $request->in_stock); 
             }
         }
-        if ($request->filled('prfc') && $request->prfc == '1') {
-            $prfc = 1;
-        }
-        $only_ranking = 0;
-        if ($request->filled('prfc') && $request->prfc == '2') {
-            $only_ranking = 1;
-        }
-        $this->only_ranking_prfcdata = $only_ranking;
-        if ($request->filled('no_rank_primecateg') && $request->input('no_rank_primecateg') == '1') {
-            $this->no_rnk_prmcat = 1;
-        }
+
+
+
         if ($request->filled('sortField') && $request->filled('sortOrder')) {
             $sortOrder = $request->sortOrder == 1 ? 'asc' : 'desc';
             $query->orderBy($request->sortField, $sortOrder);
@@ -425,7 +414,7 @@ class ContentManagementController extends Controller
                 Log::info("File generated: " . $filename);
             }
 
-            // Load data from file     
+            // Load data from file
             if (Storage::exists($filename)) {
                 $fileContents = Storage::get($filename);
                 $todos = json_decode($fileContents, true);
@@ -513,7 +502,7 @@ class ContentManagementController extends Controller
                 Log::info("File generated: " . $filename);
             }
 
-            // Load data from file     
+            // Load data from file
             if (Storage::exists($filename)) {
                 $fileContents = Storage::get($filename);
                 $todos = json_decode($fileContents, true);
