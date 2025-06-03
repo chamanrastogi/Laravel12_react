@@ -1,4 +1,4 @@
-import { AccountProps } from '@/types/accounts';
+import { AccountProps, Product } from '@/types/accounts';
 import { Link } from '@inertiajs/react';
 import axios from 'axios';
 import dayjs from 'dayjs';
@@ -12,35 +12,7 @@ import { Button, Col, Dropdown, Form, OverlayTrigger, Row, Tooltip } from 'react
 import '../../../../../../css/multiselect.css';
 import '../../../../../../css/table.css';
 
-interface WebsiteCategory {
-    website_category_name: string;
-}
-interface AvgRansk {
-    days: string;
-    month_1_avg: string;
-}
-interface Product {
-    id: number;
-    product_sku: string;
-    website_sku: string;
-    website_category?: WebsiteCategory; // Optional relationship
-    avg_ranks?: AvgRansk;
-    days_appearing: string;
-    average_rank: string;
-    product_name: string;
-    original_date_found: string;
-    brand: string;
-    price: number;
-    previous_price: number;
-    image_count: number;
-    high_res_image_count: number;
-    video_count: number;
-    review_rating: number;
-    avg_review_rating: number;
-    in_stock: string;
-    avg_ship: string;
-    prime: boolean;
-}
+
 
 const videoLinks = [
     { title: 'Content Alignment - Why does it matter?', src: '#' },
@@ -87,29 +59,27 @@ const category = [
 ];
 
 const renderTooltip = (message: string) => <Tooltip id="button-tooltip">{message}</Tooltip>;
-export default function ProductData({ webId,webName,active_state,target }: AccountProps) {
+export default function ProductData({ webId, webName, active_state, target, crawler_date_text }: AccountProps) {
     const [products, setProducts] = useState<Product[]>([]);
 
     const [loading, setLoading] = useState(true);
     const [totalRecords, setTotalRecords] = useState(0);
     const [first, setFirst] = useState(0);
-    const [rows] = useState(100);
+    const [rows, setRows] = useState(100); // Make rows state mutable with setRows
     const [sortField, setSortField] = useState<keyof Product | undefined>();
     const [sortOrder, setSortOrder] = useState<1 | -1 | undefined | null>();
     const [filters, setFilters] = useState({});
     const [searchTerm, setSearchTerm] = useState('');
 
-    const initialProduct = 'all'; // Define a default value for initialProduct
-    // Use string to match select option values
+    const initialProduct = 'all';
     const [selectedProduct, setSelectedProduct] = useState<string>(initialProduct);
     const [inStock, setinStock] = useState<string>(active_state);
 
     const [selectedCategory, setSelectedCategory] = useState([]);
 
-    // Add these to your component's state:
-    const [duplicate, setDuplicate] = useState(true); // defaultChecked
+    const [duplicate, setDuplicate] = useState(true);
     const [onlysellerdisplay, setOnlysellerdisplay] = useState(false);
-    const [noRankPrimeCategegory, setNoRankPrimeCategegory] = useState(false);
+    const [noRankPrimeCategegory, setNoRankPrimeCategegory] = useState(false); // Typo still here, consider fixing
 
     const fetchProducts = useCallback(
         async (page = 1) => {
@@ -124,12 +94,13 @@ export default function ProductData({ webId,webName,active_state,target }: Accou
                             ...filters,
                             duplicate,
                             onlysellerdisplay,
-                            noRankPrimeCategegory,
+                            noRankPrimeCategegory, // Typo
                         }),
                         search: searchTerm,
                         in_stock: inStock,
                         websiteId: webId,
-                        target:target
+                        target: target,
+                        rows: rows, // Pass the current rows value
                     },
                 });
                 setProducts(res.data.data);
@@ -140,12 +111,18 @@ export default function ProductData({ webId,webName,active_state,target }: Accou
                 setLoading(false);
             }
         },
-        [sortField, sortOrder, filters, searchTerm, webId, inStock], // <-- dependency
+        // Add all dependencies, including rows
+        [sortField, sortOrder, filters, searchTerm, webId, inStock, duplicate, onlysellerdisplay, noRankPrimeCategegory, target, rows],
     );
 
     useEffect(() => {
-        fetchProducts(first / rows + 1);
-    }, [first, rows, fetchProducts, inStock, duplicate, onlysellerdisplay, noRankPrimeCategegory]);
+        // Calculate the current page based on first and rows
+        const currentPage = first / rows + 1;
+        fetchProducts(currentPage);
+    }, [first, rows, fetchProducts, inStock, duplicate, onlysellerdisplay, noRankPrimeCategegory]); // Add filter states here
+
+    // Remove the separate onRowsChange handler if you handle it in onPage
+
     return (
         <div className="border p-3">
             <Row className="d-flex justify-content-center">
@@ -162,18 +139,23 @@ export default function ProductData({ webId,webName,active_state,target }: Accou
                         <option value="wayfair">Wayfair</option>
                         <option value="lowes">Lowes</option>
                     </Form.Select>{' '}
-                    <Button size="sm" variant="primary" className="me-1 common_btn ">
+                    <Button size="sm" variant="primary" className="common_btn me-1">
                         FIX MY CONTENT
                     </Button>
                 </Col>
                 <Col className="col-4 text-end">
-                    <Button size="sm" variant="primary" className="me-1 mt-1 common_btn">
+                    <a
+                        href="/files/ApiDoc/API - Product Data.pdf" // Set the path to your PDF file
+                        download // Add the download attribute to trigger download
+                        className="btn btn-primary common_btn me-1 mt-1" // Apply React-Bootstrap button styling classes
+                        role="button" // Add role="button" for accessibility
+                    >
                         API INSTRUCTIONS
-                    </Button>
+                    </a>
                 </Col>
             </Row>
             <Row className="d-flex justify-content-between">
-                <Col md={12} className="mt-3">
+                <Col md={12} >
                     <h2 className="pageheading">
                         <Image src="./images/icons/shopping-bag.jpg" alt="Shoping Bag" /> {webName} Unique Products{' '}
                         <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with 5+ publishedDate.')}>
@@ -202,9 +184,10 @@ export default function ProductData({ webId,webName,active_state,target }: Accou
                     </h2>
                 </Col>
             </Row>
+            
             <Row className="d-flex">
-                <Col md={12} className='text-end'>
-                    <Form.Label className="lead me-1 text-normal">Comparison Selection </Form.Label>
+                <Col md={12} className="text-end">
+                    <Form.Label className="lead text-normal me-1">Comparison Selection </Form.Label>
                     <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with 5+ publishedDate.')}>
                         <InfoIcon width={15} className="me-1" />
                     </OverlayTrigger>
@@ -217,7 +200,7 @@ export default function ProductData({ webId,webName,active_state,target }: Accou
                         filter
                         placeholder="[All Selected]"
                         maxSelectedLabels={3}
-                        className="md:w-20rem me-3 text-start multi_select px-0"
+                        className="md:w-20rem multi_select me-3 px-0 text-start"
                     />
                     <Button variant="primary" className="common_btn me-1">
                         DOWNLOAD FILE
@@ -238,11 +221,25 @@ export default function ProductData({ webId,webName,active_state,target }: Accou
                         <option value="3">Products - All</option>
                     </Form.Select>
                 </Col>
-                <Col md={2} className="mt-2">
-                    <Form.Check inline type="checkbox" name="changeFilter" label="Display SKUs with multiple PDP pages" defaultChecked />
-                </Col>
                 <Col md={3} className="mt-2">
-                    <Form.Check inline type="checkbox" name="changeFilter" label="Only display Sku that you control" />
+                    <Form.Check
+                        inline
+                        type="checkbox"
+                        name="changeFilter"
+                        label="Display SKUs with multiple PDP pages"
+                        checked={duplicate}
+                        onChange={(e) => setDuplicate(e.target.checked)}
+                    />
+                </Col>
+                <Col md={2} className="mt-2">
+                    <Form.Check
+                        inline
+                        type="checkbox"
+                        name="changeFilter"
+                        label="Only display Sku that you control"
+                        checked={onlysellerdisplay}
+                        onChange={(e) => setOnlysellerdisplay(e.target.checked)}
+                    />
                 </Col>
                 <Col md={3} className="mt-2">
                     <Form.Check
@@ -255,7 +252,7 @@ export default function ProductData({ webId,webName,active_state,target }: Accou
                     />
                 </Col>
                 <Col md={2} className="text-end">
-                    <Button size="sm" variant="primary" className="me-1 mt-1 common_btn">
+                    <Button size="sm" variant="primary" className="common_btn me-1 mt-1">
                         ADD SELECTED IMAGE & DATA
                     </Button>{' '}
                 </Col>
@@ -263,7 +260,8 @@ export default function ProductData({ webId,webName,active_state,target }: Accou
             <Row className="justify-content-between align-items-baseline">
                 <Col>
                     <div className="text-success mt-2">
-                        All Active Product Data from today’s crawl, <strong>05/09/2025</strong> is published.
+                        All Active Product Data from today’s crawl, <strong>{crawler_date_text ? crawler_date_text.toString() : ''}</strong> is
+                        published.
                     </div>
                     <div className="text-danger mt-2">
                         To access your products historical data, please go to the Content History screen by{' '}
@@ -290,7 +288,7 @@ export default function ProductData({ webId,webName,active_state,target }: Accou
                     loading={loading}
                     paginator
                     first={first}
-                    rows={rows}
+                    rows={rows} // Use the state variable
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                     lazy
@@ -299,13 +297,19 @@ export default function ProductData({ webId,webName,active_state,target }: Accou
                     sortField={sortField}
                     sortOrder={sortOrder}
                     filters={filters}
+                    rowsPerPageOptions={[100, 500, 1000]}
                     filterDisplay="row"
-                    onPage={(e) => setFirst(e.first)}
+                    onPage={(e) => {
+                        // Update both first and rows from the event
+                        setFirst(e.first);
+                        setRows(e.rows);
+                    }}
                     onSort={(e) => {
                         setSortField(e.sortField as keyof Product);
                         setSortOrder(e.sortOrder === 1 ? 1 : -1);
                     }}
                     onFilter={(e) => setFilters(e.filters)}
+                    // Remove onRowsChange={onRowsChange} if you handle it in onPage
                     className="p-datatable-sm custom-datatable mt-3"
                     showGridlines
                     stripedRows
@@ -313,6 +317,7 @@ export default function ProductData({ webId,webName,active_state,target }: Accou
                     scrollHeight="540px"
                     responsiveLayout="scroll"
                 >
+                    {/* ... existing Column components ... */}
                     <Column field="product_sku" header="Product SKU" frozen style={{ minWidth: '12rem' }} sortable />
                     <Column field="website_sku" header="Account SKU" frozen sortable />
                     <Column field="website_category.website_category_name" sortable header="Primary Category" />

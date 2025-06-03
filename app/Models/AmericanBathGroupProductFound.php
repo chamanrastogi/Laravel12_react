@@ -10,7 +10,10 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class AmericanBathGroupProductFound extends Model
 {
-    //
+    protected $table = 'american_bath_group_product_founds';
+
+    // Set the connection name (optional, only if not default)
+    protected $connection = 'mysql'; // Or 'db1', 'project_1', etc.
 
     public function website_category(): BelongsTo
     {
@@ -19,22 +22,24 @@ class AmericanBathGroupProductFound extends Model
         ]);
     }
 
-    public function avg_ranks(): HasOne
+
+    public function prime_ranks(): HasMany
     {
-        return $this->hasOne(AmericanBathGroupCategoryAvgRanksLatest::class, 'website_sku', 'website_sku')
+        return $this->hasMany(AmericanBathGroupCategoryAvgRanksLatest::class, 'website_sku', 'website_sku')
             ->where('is_prime', 1);
     }
-
-    // public function getinfo(): HasOneThrough
-    // {
-    //     return $this->hasOneThrough(
-    //         AmericanBathGroupCategoryAvgRanksLatest::class, // Target Model
-    //         NewProductMasterUrls::class,                    // Intermediate Model
-    //         'product_tracker_website_id',                   // Foreign key on Intermediate Model (NewProductMasterUrls)
-    //         'website_sku',                                  // Foreign key on Target Model (AmericanBathGroupCategoryAvgRanksLatest)
-    //         'website_id',                                   // Local key on Current Model (AmericanBathGroupProductFound)
-    //         'website_sku'                                   // Local key on Intermediate Model (NewProductMasterUrls)
-    //     )->where('is_prime', 1); // Add any specific conditions
-    // }
+     public function getinfo(): HasOneThrough
+{
+    return $this->hasOneThrough(
+        NewProductMasterUrls::class,                          // Target Model
+        AmericanBathGroupCategoryAvgRanksLatest::class,      // Intermediate Model
+        'website_sku',                                        // Foreign key on Intermediate (AmericanBathGroupCategoryAvgRanksLatest.website_sku)
+        'id',                                                 // Foreign key on Target (NewProductMasterUrls.id)
+        'website_sku',                                        // Local key on Current (AmericanBathGroupProductFound.website_sku)
+        'category'                                            // Local key on Intermediate (AmericanBathGroupCategoryAvgRanksLatest.category)
+    )
+    ->where('american_bath_group_category_avg_ranks_latest.is_prime', 1)
+    ->select('new_product_master_urls.website_category_name as website_category_name'); // Explicitly select from the target table
+}
 
 }

@@ -21,7 +21,7 @@ import StockHistory from './stock-history/stockHistory';
 import { AccountProps } from '@/types/accounts';
 
 
-const Account = ({ webId, webName,active_state,target }: AccountProps) => {
+const Account = ({ webId, webName,active_state,target,crawler_date_text }: AccountProps) => {
     const [activeKey, setActiveKey] = useState('salesImprovement');
     
     return (
@@ -108,7 +108,7 @@ const Account = ({ webId, webName,active_state,target }: AccountProps) => {
                 <Tab.Pane eventKey="notification">{activeKey === 'notification' && <Notifications />}</Tab.Pane>
                 <Tab.Pane eventKey="salesImprovement">{activeKey === 'salesImprovement' && <SaleImprovement />}</Tab.Pane>
                 <Tab.Pane eventKey="reviewRatingData">{activeKey === 'reviewRatingData' && <ReviewRatingDate />}</Tab.Pane>
-                <Tab.Pane eventKey="productData">{activeKey === 'productData' && <ProductData webId={webId} webName={webName} active_state={active_state} target={target} />}</Tab.Pane>
+                <Tab.Pane eventKey="productData">{activeKey === 'productData' && <ProductData webId={webId} webName={webName} active_state={active_state} target={target} crawler_date_text={crawler_date_text} />}</Tab.Pane>
                 <Tab.Pane eventKey="contentHistory">{activeKey === 'contentHistory' && <ContentHistory />}</Tab.Pane>
                 <Tab.Pane eventKey="imageCheck">{activeKey === 'imageCheck' && <ImageCheck />}</Tab.Pane>
                 <Tab.Pane eventKey="unmatchedProducts">{activeKey === 'unmatchedProducts' && <UncheckProducts />}</Tab.Pane>

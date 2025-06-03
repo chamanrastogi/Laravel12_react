@@ -16,6 +16,8 @@ interface ContentManagementProps {
     crawlersDisp: { [id: string]: string }; // Adjust type as needed
     website_id: string | number;
     active_state: string | number;
+    target: string | number;
+    crawler_date_text:  string |Date;
 }
 
 export interface SellerTable {

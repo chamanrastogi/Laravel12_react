@@ -3,12 +3,13 @@
 use App\Http\Controllers\Frontend\ContentManagementController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\AmericanBathGroupProductFound;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/userlogin', [HomeController::class, 'login'])->name('login');
 
-Route::fallback(fn () => Inertia::render('NotFound'));
+Route::fallback(fn() => Inertia::render('NotFound'));
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [ContentManagementController::class, 'index'])->name('home');
@@ -20,13 +21,35 @@ Route::middleware(['auth'])->group(function () {
     Route::get('ajaxProductsMargin', [ContentManagementController::class, 'ajaxProductsMargin'])->name('content.management.ajaxProductsMargin');
     Route::get('ajaxOverviewDataTab', [ContentManagementController::class, 'ajaxOverviewDataTab'])->name('content.management.ajaxOverviewDataTab');
     Route::get('/test', function () {
-        $product = AmericanBathGroupProductFound::whereHas('avg_ranks')->where('website_sku', '1000666763')->first();
-        if ($product) {
-            // dd($product?->avg_ranks[0]->categoryinfo);
-            dd($product?->avg_ranks->categoryinfo->website_category_name);
-        }
+        try {
+            // Query with relationship existence check
+            $product = AmericanBathGroupProductFound::on('db1')
+                    ->whereHas('getinfo', function ($query) {
+                        $query->where('is_prime', 1);
+                    })
+                ->where('website_sku', 'B07JFMR3FR')
+                ->first();
 
+            if (!$product) {
+                return response()->json(['error' => 'Product not found'], 404);
+            }
+
+            // Access the category info through the relationship
+            $categoryInfo = $product->getinfo;
+            
+            dd([
+                'product' => $product->toArray(),
+                'category_info' => $categoryInfo
+            ]);
+
+        } catch (\Exception $e) {
+            report($e);
+            return response()->json([
+                'error' => 'Server error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     })->name('test');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

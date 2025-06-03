@@ -35,7 +35,7 @@ const videoLinks = [
     { title: 'How To Delete Target Product Lists', src: '#' },
 ];
 const renderTooltip = (message: string) => <Tooltip id="button-tooltip">{message}</Tooltip>;
-export default function ContentManagement({ crawlersDisp, website_id,active_state,target }: ContentManagementProps) {
+export default function ContentManagement({ crawlersDisp, website_id,active_state,target,crawler_date_text }: ContentManagementProps) {
   const [selectedWebsiteId, setSelectedWebsiteId] = useState<string>(String(website_id));
     const [activeKey, setActiveKey] = useState<string>('dashboard'); // active tab state
     return (
@@ -90,7 +90,8 @@ export default function ContentManagement({ crawlersDisp, website_id,active_stat
                                 webId={selectedWebsiteId} // Pass the key (ID)
                                 webName={crawlersDisp[selectedWebsiteId]} // Pass the value (Display Name)
                                 active_state={String(active_state)}  // Pass the value (Active State or Product status)
-                                target={target}
+                                target={String(target)}
+                                crawler_date_text={crawler_date_text}
                             />
                         )}
                     </Tab>
