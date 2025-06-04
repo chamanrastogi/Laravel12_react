@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Frontend\ContentManagementController;
 use App\Http\Controllers\Frontend\HomeController;
-use App\Models\AmericanBathGroupProductFound;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,34 +20,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('ajaxProductsMargin', [ContentManagementController::class, 'ajaxProductsMargin'])->name('content.management.ajaxProductsMargin');
     Route::get('ajaxOverviewDataTab', [ContentManagementController::class, 'ajaxOverviewDataTab'])->name('content.management.ajaxOverviewDataTab');
     Route::get('/test', function () {
-        try {
-            // Query with relationship existence check
-            $product = AmericanBathGroupProductFound::on('db1')
-                    ->whereHas('getinfo', function ($query) {
-                        $query->where('is_prime', 1);
-                    })
-                ->where('website_sku', 'B07JFMR3FR')
-                ->first();
+        $categoryFounds = DB::connection('db1')
+            ->table('american_bath_group_category_avg_ranks_latest')
+            ->select('website_sku', 'category', 'days', 'average')           
+            ->where('website_id', 4)
+            ->where('is_prime', 1)
+            ->groupBy('website_sku', 'category', 'days', 'average')            
+            ->get()
+            ->keyBy('website_sku');
 
-            if (!$product) {
-                return response()->json(['error' => 'Product not found'], 404);
-            }
-
-            // Access the category info through the relationship
-            $categoryInfo = $product->getinfo;
-            
-            dd([
-                'product' => $product->toArray(),
-                'category_info' => $categoryInfo
-            ]);
-
-        } catch (\Exception $e) {
-            report($e);
-            return response()->json([
-                'error' => 'Server error',
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        dd($categoryFounds);
     })->name('test');
 });
 

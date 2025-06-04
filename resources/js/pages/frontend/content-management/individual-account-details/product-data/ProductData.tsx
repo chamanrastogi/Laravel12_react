@@ -12,8 +12,6 @@ import { Button, Col, Dropdown, Form, OverlayTrigger, Row, Tooltip } from 'react
 import '../../../../../../css/multiselect.css';
 import '../../../../../../css/table.css';
 
-
-
 const videoLinks = [
     { title: 'Content Alignment - Why does it matter?', src: '#' },
     { title: 'Understand what content is most important', src: '#' },
@@ -103,6 +101,7 @@ export default function ProductData({ webId, webName, active_state, target, craw
                         rows: rows, // Pass the current rows value
                     },
                 });
+
                 setProducts(res.data.data);
                 setTotalRecords(res.data.total);
             } catch (err) {
@@ -155,7 +154,7 @@ export default function ProductData({ webId, webName, active_state, target, craw
                 </Col>
             </Row>
             <Row className="d-flex justify-content-between">
-                <Col md={12} >
+                <Col md={12}>
                     <h2 className="pageheading">
                         <Image src="./images/icons/shopping-bag.jpg" alt="Shoping Bag" /> {webName} Unique Products{' '}
                         <OverlayTrigger placement="top" overlay={renderTooltip('Percentage of products with 5+ publishedDate.')}>
@@ -184,7 +183,7 @@ export default function ProductData({ webId, webName, active_state, target, craw
                     </h2>
                 </Col>
             </Row>
-            
+
             <Row className="d-flex">
                 <Col md={12} className="text-end">
                     <Form.Label className="lead text-normal me-1">Comparison Selection </Form.Label>
@@ -319,15 +318,21 @@ export default function ProductData({ webId, webName, active_state, target, craw
                 >
                     {/* ... existing Column components ... */}
                     <Column field="product_sku" header="Product SKU" frozen style={{ minWidth: '12rem' }} sortable />
-                    <Column field="website_sku" header="Account SKU" frozen sortable />
-                    <Column field="website_category.website_category_name" sortable header="Primary Category" />
                     <Column
-                        field="avg_ranks.days"
+                        field="website_sku"
+                        header="Account SKU"
+                        frozen
                         sortable
-                        header="Days Appearing Last 30 Days"
-                        body={(rowData) => rowData.avg_ranks?.days ?? 'N/A'}
+                        
+                        body={(rowData) => (
+                            <a href={rowData.categoryinfo?.websiteUrl} className="text-danger text-decoration-none" target="_blank" rel="noopener noreferrer">
+                                {rowData.website_sku}
+                            </a>
+                        )}
                     />
-                    <Column field="average_rank" sortable header="Average Rank Last 30 Days" body={(rowData) => rowData.average_rank ?? 'N/A'} />
+                    <Column field="categoryinfo.categoryName" sortable header="Primary Category" style={{ minWidth: '16rem' }} />
+                    <Column field="days" sortable header="Days Appearing Last 30 Days" body={(rowData) => rowData.days ?? 0} />
+                    <Column field="average" sortable header="Average Rank Last 30 Days" body={(rowData) => rowData.average ?? 'N/A'} />
                     <Column
                         field="original_date_found"
                         header="Original Date Found"

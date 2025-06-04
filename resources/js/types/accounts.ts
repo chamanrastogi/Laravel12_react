@@ -7,21 +7,18 @@ export interface AccountProps {
     // ...other props
 }
 
-export interface WebsiteCategory {
-    website_category_name: string;
+export interface Categoryinfo {
+    categoryName: string;
+    websiteUrl: string;
 }
-export interface AvgRansk {
-    days: string;
-    month_1_avg: string;
-}
+
 export interface Product {
     id: number;
     product_sku: string;
     website_sku: string;
-    website_category?: WebsiteCategory; // Optional relationship
-    avg_ranks?: AvgRansk;
-    days_appearing: string;
-    average_rank: string;
+    categoryinfo: Categoryinfo;    
+    days?: string;
+    average: string;   
     product_name: string;
     original_date_found: string;
     brand: string;
@@ -34,5 +31,5 @@ export interface Product {
     avg_review_rating: number;
     in_stock: string;
     avg_ship: string;
-    prime: boolean;
+    prime: boolean;  
 }
